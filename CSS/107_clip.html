@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        div {
+            position: relative;
+            width: 500px;
+        }
+
+        img {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            /* clip: rect(0 500px 300px 0);  */
+            /* position: absoulte가 사용된 요소에서만 clip 사용이 가능함. 사진이 사라진 이유는 clip때문에 이미지가 잘린 것. 4가지 속성은 각각 top, right, bottom, left임. top과 left를 기준으로 이미지를 랜더링함. 그래서 top과 left는 그냥 두고 right과 bottom으로 이미지 사이즈만큼 픽셀을 설정해야 이미지가 나타남. 다 0이 되버리면 이미지를 아예 출력할 수 없는것. */
+            clip-path: inset(0 0 0 0);  
+            /* 클립보다 훨씬 직관적이고 간단함. 처음부터 사진이 다 보임. 각각의 영역에서 다 자를 수 있음.값을 하나만 적으면 전체를 다 적은 것과 동일하게 적용됨. 잘라내도 공간은 존재함! */
+
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="https://media.istockphoto.com/photos/oranges-picture-id611607550?k=20&m=611607550&s=612x612&w=0&h=VvB-P_LYdCpm8CguRn_ONRe9WDDibMYfJHVmsKKebvI=" alt="">
+    </div>
+</body>
+</html>

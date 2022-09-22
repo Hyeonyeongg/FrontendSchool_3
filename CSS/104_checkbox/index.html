@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .txt-hide {
+            position: absolute;
+            clip: rect(0 0 0 0);
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+        }
+
+        .labl-hold::before {
+            display: inline-block;
+            content: ''; /*content속성이 없으면 가상요소가 존재하지 않게됨.*/
+            width: 22px; /* 이미지의 크기에 맞게 크기를 설정함. */
+            height: 22px;
+            vertical-align: -5px;
+            background-image: url("images/css_sprites_retina.png");
+            background-position: -52px -10px; 
+            background-size: 84px 42px; /*레티나 문제를 해결하기 위해 두배(168px 84px)로 확대된 이미지의 사이즈를 원본 이미지의 사이즈에 맞게 2로 나눠서 압축해줘야함. (참고로 이미지 판을 만들떄 여백도 2배로 해줬음.) 포지션도 마찬가지로 2로 나눠줘야함. 이미지 판을 2로 나눠서 압축했기 때문에 포지션이 바뀜. */
+        }
+
+
+        /* input과 label이 연결되어있기 때문에 input을 숨겼음에도 checked가 가능한 것. 연결이 안되어있으면 불가 */
+        .inp-hold:checked+.labl-hold::before {
+            background-image: url("images/css_sprites_retina.png");
+            background-position: -10px -10px;
+            background-size: 84px 42px;
+        }
+
+        /* 아웃라인을 그려줘서 포커싱이 잡히게 해줌. border은 박스 모델에 포함되어 있기 때문에 포커싱이 되었을 때 레이아웃에 영향을 미치지만 아웃라인은 레이아웃에 영향을 미치지 않음. 따라서, outline이 적절함.*/
+        .inp-hold:focus+.labl-hold::before {
+            outline: 2px solid #000;
+            outline-offset: 5px; /*원래는 요소의 크기만큼 차지하지만 offset을 통해 5px만큼 여유공간이 생김*/
+            border-radius: 50%; /*동그랗게 만들어줌.*/
+        }
+    </style>
+</head>
+<body>
+    <!--  인풋은 숨겼지만 여전히 존재하고 있음. -->
+    <input type="checkbox" id="inpHold" class="inp-hold txt-hide">
+    <label for="inpHold" class="labl-hold">선택해주세요</label>
+</body>
+</html>
