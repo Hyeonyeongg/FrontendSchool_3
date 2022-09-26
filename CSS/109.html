@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+        }
+
+        video {
+            width: 100%; /* width: 100%;만 줄 경우 높이도 넓이 비율에 맞게 잘 조절됨.*/
+            max-width: 100%; /*영상의 원본 사이즈까지만 커짐.*/
+        }
+
+        /* iframe {
+            width: 100%;
+            height: 100%;
+        } */
+
+        /* div {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        span {
+            display: block;
+            padding-top: 40%;
+            background-color: pink;
+        } */
+
+        .cont-video {
+            position: relative;
+            padding-top: 56.25%; /* body의 넓이의 56.25%만큼 높이를 차지*/
+            /* height: 56.25vw;  */
+            /*padding-top대신 이렇게 대체할 수도 있음. 하지만, article의 부모가 body가 아니게된다면 이렇게 쓸 수는 없음. 기준이 body가 아니게 되기 때문. 새로운 부모의 width값은 달라질 수 있으니까.
+            또한, height: 56.25%로 맞추면 높이를 맞출 수 없음. 부모 컨테이너의 높이가 정해져있지 않으면 자식값으로 %를 쓸 수 없음. 기준이 없으니까.
+            즉, 부모(컨테이너)의 높이 값이 설정되어 있지 않은 경우에도 padding-top을 사용할 수 있는 것임!
+            보통 요소한테 높이값을 주지 않기 때문에 paading-top이 유용하게 사용됨.*/
+        }
+
+        .video-next-level {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /*width, height값 없이 top, left, right, bottom을 0으로 주면 안됨. 임베디드 요소 같은 경우에는 이런 속성이 작동하지 않음. 넓이, 높이 값을 직접 지정해줘야함.*/
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- <video src="nextlevel.mp4" controls></video> -->
+    <!-- <iframe src="https://www.youtube.com/embed/4TWR90KJl84" title="aespa 에스파 'Next Level' MV" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  -->
+    <article class="cont-video">
+        <iframe src="https://www.youtube.com/embed/4TWR90KJl84" title="aespa 에스파 'Next Level' MV" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="video-next-level"></iframe> 
+    </article>
+</body>
+</html>
