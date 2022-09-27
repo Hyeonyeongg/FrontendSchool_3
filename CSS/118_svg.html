@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .one {
+            /* 벡터값은 좌표로 되어있기 때문에 넓이와 높이값이 지정되지 않으면 이미지를 어떻게 만들어야할지 모름. 그래서 SVG는 넓이와 높이값이 꼭 있어야함.  */
+            width: 100vw; 
+            height: 100vh;
+        }
+
+        /* img 태그나 css background를 사용할 경우 SVG를 조작할 수 없음. 따라서, 변화 없음. */
+        /* .jeju {
+            fill: red; 
+        } */
+
+        .two {
+            width: 100vw;
+            height: 100vh;
+            background: url(southKoreaLow.svg);
+        }
+    </style>
+</head>
+<body>
+    <img class="one" src="./southKoreaLow.svg" alt="한국지도">
+    <div class="two"></div>
+</body>
+</html>
