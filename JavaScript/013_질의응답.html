@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+    </head>
+    <body>
+        <p id="one"></p>
+
+        <!-- 위에서부터 차례대로 실행됨. console창을 열어보면 start와 midde이 찍혀있고, 그 다음 heelo world3이라는 알람창이 뜸. -->
+        <script>
+            console.log("start");
+            document.getElementById("one").innerHTML =
+                "hello <strong>world 1</strong>";
+            console.log("middle");
+            window.alert("hello world 3");
+            console.log("end");
+        </script>
+    </body>
+</html>

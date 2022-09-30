@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        let n1 = 10000;
+        let n2 = 10.123123;
+        let n3 = 31;
+        let n4 = 1001;
+        let n5 = 1111; //무시 15 
+        
+        // 275 (이진수 계산법)
+        // 256 + 16 + 2 + 1
+        // 100010011
+
+        let s1 = "1000000000";
+        let s2 = "1,000,000,000";
+        console.log(parseInt(n1));
+        console.log(parseInt(n2)); 
+        console.log(parseInt(n3, 2)); //NaN이 출력됨. n3의 값을 2진수로 읽어서 10진수로 변환.
+        console.log(parseInt(n4, 2)); //뒤에 있는 숫자가 진수. 2진수로 인식하여 계산해주는 것?
+        console.log(parseInt(n4, 8));
+        console.log(parseInt(n5, 2));
+        console.log(n2.toFixed(3)); //소수점 3번째 자리 까지 출력
+
+        console.log("-------");
+        console.log(Number(true)); //1
+        console.log(Number(false)); //0
+        console.log(Number("")); // 0
+        console.log(Number(" ")); // 사실, " "은 Ture지만 Number로 바꿨을 때 0이 나오는 것.
+
+        console.log("-------");
+        console.log(Number("hello")); //NaN
+        console.log(Number("10 20")); //NaN
+        console.log(Number("10     ")); //10 공백을 없는 것으로 처리해줌.
+        console.log(Number("     10")); //10
+        console.log(Number("     10     ")); //10
+
+        if (" ") {
+            console.log("hello world! - 1");
+        }
+
+        if ("") {
+            console.log("hello world! - 2");
+        }
+
+
+        console.log(Math.abs(-10)); //절대값
+        console.log(Math.PI);
+        console.log(Math.max(10, 20, 30, 1, 200, 3)); 
+        console.log(Math.min(10, 20, 30, 1, 200, 3)); //값이 이렇게 펼쳐져 있어야함. 단순한 값을 넣어서 비교할 때는 스프레드를 사용하지 않음.
+
+        let data = [10, 20, 30, 40];
+
+        console.log(Math.max(data)); //NaN 이렇게 사용하면 안됨. 
+        console.log(Math.max(...data)); //spread 용법 사용. 전개를 항상 해줘야함. 
+
+        console.log(Math.round(4.7)); //반올림
+        console.log(Math.round(4.4));
+
+        //ceil(올림) 이나 floor(내림)
+        console.log(Math.random() * 1000); //100보다 작은 랜덤한 수를 구하고 싶을 때
+
+        console.log(Math.sqrt(64)); //루트
+        console.log(Math.pow(2, 3));
+        console.log(Math.pow(2, 4));
+
+        // computer의 10진수 연산은 정확하지 않다.
+        // 부동소수점 이슈
+        // 0.1 + 0.2
+        // 0.30000000000000004
+        // 0.1 * 3
+        // 0.30000000000000004
+        // 0.3 + 0.6
+        // 0.8999999999999999
+
+        // JS에서 큰 숫자를 사용할 때에는 BigInt를 사용합니다. BigInt를 붙이거나 뒤에 n을 붙이고 계산하면 됨. Bigint는 업로드 할 수 있는 용량을 제한할 때 사용.
+        // The proposal belongs to ECMAScript 2020, which is the 11th edition
+        // console.log(Number.MAX_SAFE_INTEGER)  // 2^53 - 1  SAFE_INTEGER를 넘어가면 손실이 됨. 우리가 원하는 결과가 안나옴. 
+        // BigInt(12312312312312312312) + BigInt(2) // 제대로 작동하지 않음
+        // BigInt(Number.MAX_SAFE_INTEGER)
+        // BigInt(Number.MAX_SAFE_INTEGER) + 1000n // 제대로 작동(숫자 자체가 MAX_SAFE_INTEGER를 넘어가면 제대로 표현하지 못함)
+        // BigInt(5) + 5n
+        // BigInt(5) + 5 // error
+        // BigInt(5) / 2n // 2n (소수 표현 안됨)
+        // BigInt("10") + BigInt("10") // 큰 값을 정수로 입력받을 때에는 string으로 처리해서 받아야 함
+
+        /*
+            정보처리기사
+            1bit = 0과 1을 표현할 수 있는 최소 단위
+            8bit = 1byte
+            00000000 ~ 11111111 (0 ~ 255)
+                ex) 0.0.0.0 ~ 255.255.255.255
+            1024byte = 1KB
+            1024KB = 1MB
+            1024MB = 1GB
+            1024GB = 1TB
+            (KB,MB,GB,TB,PB)갈매기털빼
+        */
+    </script>
+</body>
+</html>
