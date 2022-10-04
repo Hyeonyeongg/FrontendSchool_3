@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bool</title>
+</head>
+<body>
+    <script>
+        // const(참조 변경 불가), let(변경 가능), var(x)
+        let one = true; //다른 언어는 True(대문자)인 경우도 있음.
+        let two = false;
+        let three; //undefined. 값이 정의되지 않았음.
+        let four = null;
+        let five = Infinity; //무한대수는 비교에서 많이 활용됨.
+
+        console.log(Boolean("")); //false. 문자열이 아무것도 없으면 false
+        console.log(Boolean(" ")); //안에 공백문자가 있는 것이기 때문에 true
+        console.log(Boolean("abc")); //true
+        console.log(Boolean(0)); //false
+        console.log(Boolean(100)); //true
+        console.log(Boolean(-100)); //true. 0이외의 다른 숫자들은 모두 true
+        console.log(Boolean(three)); //false
+        console.log(Boolean(four)); //false
+        console.log(Boolean(five)); //true
+        one = 0;
+
+        // 우리를 힘들게 하는 JS
+        console.log(Boolean([])); //true. 빈 array도 true로 판단함. 다른 언어에서도 말이 안되는 문법.
+        console.log(Boolean({})); //true. 
+
+
+        if (one) {
+            console.log("hello");
+        } else {
+            console.log("world");
+        }
+    </script>
+</body>
+</html>
