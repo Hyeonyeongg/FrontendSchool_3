@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        // Object (연식이 좀 됐음)
+
+        // 1. 기본 형태
+        let newuser = {
+            //key : value
+            id : "licat",
+            pw : "1234", //보통 이렇게 저장하지 않고, 81DC9BDB52D04DC20036DBD8313ED055 이렇게 저장합니다. 해시로 변환하여 입력함. ("MD5는 사용하지 않습니다.") 
+            name : "leehojun",
+            email : "paul@weniv.com",
+            active : true //false면 휴면계정으로 변하는 식
+        }
+
+        console.log(newuser["id"]); //key 값으로 value값을 찾아낼 수 있음. 강사님은 주로 이렇게 사용
+        // console.log(newuser[id]); //에러 발생. id를 변수 취급함.
+        console.log(newuser.id); //동일하게 value 값이 나옴. 보통 첫 번째 방식을 많이 사용함.
+        // console.log(newuser."id"); //에러 발생
+
+        //2. 아래와 같은 형태로 많이 사용됨.
+        let user = [
+            {
+                //key : value
+                id : "licat",
+                pw : "1234", 
+                name : "leehojun",
+                email : "paul@weniv.com",
+                active : true 
+            }, 
+            {
+                //key : value
+                id : "lion",
+                pw : "2345", 
+                name : "leehojin",
+                email : "pa@weniv.com",
+                active : true 
+            }
+        ];
+
+        console.log(user[0]["id"]); //licat이 출력됨.
+
+        //3. 아래와 같이 선언이 가능합니다.
+        let a = 10; //let a가 key, 10이 value
+        let b = 20;
+        let c = 30;
+        let e = {a, b, c};
+        console.log(e); // {a: 10, b:20, c:30}이 출력됨. 키와 밸류 값이 쌍인 변수를 넣을 수 있음.
+
+        // let test = {'one', 'two', 'three'} //에러
+        // console.log(test);
+        
+        //4. 값을 변경할 수 있습니다.
+        e["a"] = 50; 
+        console.log(e); // {a: 50, b:20, c:30}
+
+
+        //5. key 값으로 문자열 외에 다른 값을 넣었을 경우
+        let txt = "hello";
+        let txt2 = {
+            0: "h",
+            1: "e",
+            2: "l",
+            2: "l",
+            4: "o",        
+        };
+
+        console.log(txt[1]);
+        console.log(txt2[1]); //유사 배열 객체(배열이랑 다름. for로 순회 돌았을 때 스피드가 다름. 내적으로 구조가 다름.) 추후 학습 예정
+        
+        // 아래 2개 코드가 싱행되게 해주는 것이 map
+        // console.log(txt2.1); //object에서는 error 
+        // console.log(txt2.{'one' : 1}) 
+
+        // 6. value의 값으로 문자열 외에 다른 값을 넣었을 경우
+        let test = {
+            one: sum,
+            two: console.log,
+            three : window.innerWidth,
+            four : [10, 20, 30],
+            five : '10',
+            six : 100
+        };
+        console.log(test);
+        test.two("호준!!");
+
+        //Object에 prototype랑 붙은거랑 안붙은것의 차이 알아두기 (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/propertyIsEnumerable)
+
+        // 7. key와 value만 뽑아낼 수 없을까? 
+        console.log(Object.keys(newuser));
+        console.log(Object.values(newuser));
+        console.log(Object.entries(newuser));
+
+        // map에서 사용할 수 있습니다.
+        // newuser.keys();
+        // newuser.values();
+        // newuser.entries();
+
+        // 8. object spread 용법
+        // let newuser = {
+        //     id : "licat",
+        //     pw : "1234", 
+        //     name : "leehojun",
+        //     email : "paul@weniv.com",
+        //     active : true 
+        // }
+
+        let 회원정보업데이트 = {
+            name : "cat",
+            email : "jun@naver.com",
+        }
+
+        // 변경된 값을 업데이트하려면?
+        // newuser["name"] = 회원정보업데이트["name"];
+        // newuser["email"] = 회원정보업데이트["email"];
+        // console.log(newuser);
+
+        //요즘에는 아래와 같은 방법을 사용함.
+        newuser = {...newuser, ...회원정보업데이트}; //newuser에 있는 아이템을 쭉 펼침. 그리고 뒤에 업데이트 할 정보도 같이 펼쳐줌. 이렇게 하면 업데이트가 됨. 회원정보업데이트가 newuser에 들어가는 것임.
+        console.log(newuser);
+
+        //이렇게 바꾸면 2개 다 바뀜
+        let newuser2 = newuser; //새로운 친구가 실제로 서비스에 가입했을 때 내용은 같을지라도  newuser2와 newuser은 다른 것.
+        // 그런데 등호기 때문에 newuser2가 newuser를 가르켜버림. 그래서 newuser2를 수정해도 newuser가 수정이 되버림. 우리가 원하는 것은 newuser2만 수정되는 것.
+        newuser2["id"] = "helloworld"; 
+        console.log(newuser); //얘도 id가 hello world로 변함.
+        console.log(newuser2);
+
+        let newuser2 = {...newuser} ; //spread 기법을 사용하면 원본을 만지지 않고, 사용할 수 있음. 펼쳐놓은 값을 할당.
+        newuser2["id"] = "helloworld"; 
+        console.log(newuser); 
+        console.log(newuser2); //얘만 id가 hello world로 변함.
+
+
+        // 함수는 후에 자세하게 다룸.
+        function sum(x, y) {
+            return x + y;
+        }
+
+        //TMI
+        // console.log(sum); //function의 기능 전체 출력
+        // console.log(typeof sum); //function
+        // sum.value = 'hojun';
+        // console.log(console.dir(sum));
+        // console.log(sum.value);
+    </script>
+</body>
+</html>

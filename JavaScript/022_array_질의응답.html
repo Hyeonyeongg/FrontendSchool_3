@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        //원본 수정은 피하는 것이 좋음. 하지만, pop()을 이용하면 원본에 수정이 일어남.
+        //만약 배열에서 원본 수정 없이 값을 수정하고 싶다면? -> 스프레드 용법을 써서 새로운 객체를 만든다
+        let x = [10, 20, 30, 40]; //원본 수정 없이 뒤에 값을 꺼내고 싶다면?
+        console.log([...x].pop()); //스프레드는 원본 수정이 되지 않음. 이렇게되면 새로운 array가 만들어지고 그곳에서 pop을 해주면됨.
+        console.log(x); // 그대로 10, 20, 30, 40이 출력됨.
+
+        let y = [...x] //원본 수정 없이 pop을 하고 난 이후의 값을 출력하려면?
+        y.pop()
+        console.log(y); //10, 20, 30이 출력됨. 원본 x에는 변화가 없음.
+
+        let a = [1, 2, 3];
+        let b = [6, 7, 8];
+        let c = [...a, 100, ...b];
+        console.log(c);
+    </script>
+</body>
+</html>
