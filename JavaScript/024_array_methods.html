@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        // '{}'를 리터럴 이라고 함. 리터럴은 변수에 할당되기 전의 값. {}는 객체 리터럴, []는 배열의 리터럴, ""는 문자열의 리터럴, 1234는 숫자의 리터럴. 각각의 타입마다 리터럴 표현 방식이 있음. 
+
+        //배열 생성 방법1 - 리터럴로 선언하는 방법 (많이 사용됨.)
+        let myarray = [];
+
+        // 배열 생성 방법2 - 배열 생성자로 선언하는 방법(거의 안씀)
+        let myarray2 = new Array(5); //숫자를 하나만 넣으면 배열의 길이. 길이가 5인 배열이 생성됨. 
+        let myarray3 = new Array(5, 3, 2); // 두 개이상 넣으면 원소가 됨. 5, 3, 2를 원소로하는 배열이 생성됨.
+
+        //배열에 있는 값 접근하기. 인덱스 번호로 접근 가능.
+        console.log(myarray3[0]); 
+        myarray3[0] = 100; //새로운 값 할당 가능. 수정 가능
+        
+        console.log("hello"[2]); //문자열도 인덱스로 접근가능함. 
+        let val = "hello";
+        val[2] = 'z'; //문자열은 인덱스로 값 접근은 가능하지만 값을 바꿀 수는 없음. 불변성
+
+
+        console.log([1, 2, 3, 4][2]);  //3이 반환됨. 생성과 동시에 값에 바로 접근할 수 있음.
+        console.log([1, 2, 3, 4][5]);  //undefined가 출력됨. 배열안에 존재하지 않는 인덱스에도 접근 가능함.
+        
+        myarray3[5] = 10; //값이 중간에 비어있는 배열도 만들 수 있음. [5, 3, 2, empty, empty, 10]
+
+        console.dir(myArray2); //배열에서 사용할 수 있는 메소드를 확인할 수 있다.
+        
+        console.log('---------------------------------------------------------------');
+        
+        //배열의 메서드
+        //1. unshift, shift
+        const cafe = ['coffee', 'cake', 'tea', 'cookie']
+        const count = cafe.unshift('bread'); //배열의 맨 앞에 'bread'를 추가하고, 배열의 길이를 반환한다.
+        console.log(count);
+        console.log(cafe);
+
+        const cafe2 = ['coffee', 'cake', 'tea', 'cookie']
+        const firstElement = cafe2.shift();
+        console.log(firstElement); //coffee를 출력함.
+        console.log(cafe); //['cake', 'tea', 'cookie']
+        
+        //2. splice
+        // const cafe = ['coffee', 'cake', 'tea', 'cookie']
+        console.log(cafe.splice(-1, 2, 'bread')); //음수를 입력할 시, 배열의 끝에서부터 요소를 셈. ['coffee', 'cake', 'tea', 'bread'] 출력됨.
+        
+        //3. slice
+        const cafe3 = ['coffee', 'cake', 'tea', 'cookie']
+        cafe3.slice(1, 3); //['cake', 'tea']
+        cafe3.slice(2); //['tea', 'cookie']
+        cafe3.slice(-2, -1); //['tea']
+        cafe3.slice(0, -2); //['coffee', 'cake']
+
+        
+        //Q. 다음 배열에서 물고기가 아닌 것을 slice로 선택해 콘솔로 출력해보세요.
+        let fish = ['정어리', '고등어', '돌고래', '참치', '고래상어', '코끼리'];
+        fish.slice(2, 3);
+        fish.slice(5);
+
+        cafe.reverse(); //순서 뒤집기
+        cafe.indexOf('tea'); //요소의 인덱스 찾기
+        cafe.indexOf('coffe', 1) //인덱스 1부터 coffe를 찾음. 존재하지 않으면 -1 반환
+
+        //4. indexOf
+        const shop = ["tea", "coffee", "tea", "cake", "tea", "cookie"];
+        console.log(shop.indexOf('tea')); //왼쪽에서부터 탐색하여 처음 나오는 tea의 인덱스를 반환함.
+
+
+        //5. join
+        cafe.join('/'); //요소들을 연결하여 하나의 문자열로 만들어줌.  'coffee/cake/tea/cookie'
+        cafe.join('/').split('/'); //문자일이 된 배열을 다시 배열로 바꾸기. split() 이용.
+        
+        
+        //6. includes
+        cafe.includes('bread'); //배열에 특정 값이 포함되어있으면 true, 포함되어있지 않으면 false를 반환함.
+        //expected output: false
+        
+        //7. find
+        const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        arr.find(i => i > 5); //6 하나의 요소라도 조건을 만족하는지 확인. 6이 만족되는 순간 바로 종료되고, 6을 출력함.
+        
+
+        //8. filer
+        const arr2 = [{
+            'name' : 'title1',
+            'contents' : 'contents1',
+            'dataNum' : 1
+        }, {
+            'name' : 'title2',
+            'contents' : 'contents2',
+            'dataNum' : 2
+        }, {
+            'name' : 'title3',
+            'contents' : 'contents3',
+            'dataNum' : 3
+        }, {
+            'name' : 'title4',
+            'contents' : 'contents4',
+            'dataNum' : 4
+        }, {
+            'name' : 'title5',
+            'contents' : 'contents5',
+            'dataNum' : 5
+        }];
+
+        arr2.filter(i => i.dataNum > 3); //i에는 배열의 원소가 들어감. (모든 요소를 다 훑음) 새로운 배열을 만들어서 출력함.
+        //expected output:
+        //     [{
+        //         'name' : 'title4',
+        //         'contents' : 'contents4',
+        //         'dataNum' : 4
+        //     }, {
+        //         'name' : 'title5',
+        //         'contents' : 'contents5',
+        //         'dataNum' : 5
+        // }]
+
+
+        //9. map
+         //filter를 새로운 배열을 뻡는데 조건을 제시해서 걸러내는 것. map은 원하는 값을 뽑아내서 새로운 배열을 만들어냄.
+        // 조건이 있고 없고의 차이. map에는 조건이 존재하지 없음.
+        const arr3 = [{
+            'name' : 'title1',
+            'contents' : 'contents1',
+            'dataNum' : 1,
+            'data' : [1, 2, 3]
+        }, {
+            'name' : 'title2',
+            'contents' : 'contents2',
+            'dataNum' : 2,
+            'data' : [1, 2, 3]
+        }, {
+            'name' : 'title3',
+            'contents' : 'contents3',
+            'dataNum' : 3,
+            'data' : [1, 2, 100]
+        }, {
+            'name' : 'title4',
+            'contents' : 'contents4',
+            'dataNum' : 4,
+            'data' : [1, 2, 3]
+        }, {
+            'name' : 'title5',
+            'contents' : 'contents5',
+            'dataNum' : 5,
+            'data' : [1, 2, 100]
+        }];
+
+        // map이라는 메소드를 통해서 안에 함수를 실행하고 있음. i에 배열(arr3) 안에 있는 원소가 하나씩 하나씩 들어가면서 전체적으로 훑게됨. 그리고 i의 name을 배열 형태로 반환함.
+        const newArr2 = arr3.map(function (i) {
+            return i.name;
+            }
+        );
+        arr3.map(i => i.name).indexOf('title3');
+        //expected output: 2
+
+
+        // map메소드를 이용해서 name의 값들을 원소로 하는 새로운 배열을 만들어 봅시다
+        var studentList = [
+            {
+                id: 1, name: '원범', score: 'great'
+            },
+            {
+                id: 2, name: '김진', score: 'nice'
+            },
+            {
+                id: 3, name: '혜원', score: 'good'
+            },
+            {
+                id: 4, name: '재현', score: 'too cool for school'
+            }
+        ];
+
+        const newArr = studentList.map(
+            function (i) {
+                return i.name;
+            }
+        ); 
+        
+        //10. forEach()
+        const arr4 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        arr4.forEach(function(i){return console.log(i)});
+
+        //11. concat() 
+        const cafe4 = ['coffee'];
+
+        cafe4.concat(['cake']); //concat이라는 배열을 인자로 전달하고 있음.
+        //expected output: ['coffee', 'cake'] //배열이 합쳐짐.
+
+        cafe4.concat(['tea'], 'cookie'); //tea는 배열로 전달하고, cookie는 문자열로 전달하고 있음. 이처럼, 여러가지 요소를 한번에 추가하는 것도 가능함.
+        //expected output: ['coffee', 'tea', 'cookie']
+
+        //12/ sort()
+        const arrNum = [13, 9, 10, 2];
+
+        arrNum.sort(function (a, b) {
+            console.log(`a : ${a}`, `b : ${b}`); // a, b에 어떤 값이 찍히는지 확인해봄.
+            return a - b;
+        });
+        // 음수면 자리를 바꾸고, 양수면 자리를 바꾸지 않음.
+        // 9 - 13 ==> 음수  ==> [9, 13, 10, 2]
+        // 10 - 9 ==> 양수 ==> [9, 13, 10, 2]
+        // 10 - 13 ==> 음수 ==> [9, 10, 13, 2]
+        // 10 - 9 ==> 양수 ==> [9, 10, 13, 2]
+        // 2 - 10 ==> 음수 ==> [9, 2, 10, 13]
+        // 2 - 9 ==> 음수 ==> [2, 9, 10, 13]
+
+
+        //이렇게도 작성 가능
+        const arrNum2 = [13, 9, 10, 2];
+        arrNum2.sort(function (a, b) {
+            // return a - b;
+            if (a < b) {
+                return -1
+            } else if (b < a) {
+                return 1
+            } else {
+                return 0
+            }
+        })
+
+        //배열 안에 있는 값이 숫자나 문자가아닌 배열이나 객체인경우
+        const studentList = [
+            {id: 1, product: '연필', stock: 10},
+            {id: 2, product: '노트', stock: 100},
+            {id: 3, product: '지우개', stock: 5},
+            {id: 4, product: '볼펜', stock: 30},
+        ]
+
+        //만약, stock의 갯수대로 오름차순으로 정렬하고 싶다면? 
+        // 첫 번째 방법
+        studentList.sort(function (a, b) {
+            return a.stock - b.stock;
+        })
+
+        // 두 번째 방법
+        studentList.sort(function(a, b){
+            if(a.stock < b.stock){
+                return -1
+            }else if(b.stock < a.stock ){
+                return 1
+            } else {
+                return 0
+            }
+        });
+    </script>   
+</body>
+</html>
+
