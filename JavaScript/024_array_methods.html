@@ -250,6 +250,54 @@
                 return 0
             }
         });
+        
+        //sort()에서 원본을 만지고 싶지 않고싶다면?
+        let arrNum_test = [13, 9, 10, 2];
+        [...arrNum_test].sort(); //원본을 만지지 않음. arrNum_test와 관련없는 완전히 새로운 어레이가 만들어지는 것이기 때문. 정렬된 값을 얻을 수 있음.
+        
+        // let a = [1, 2, 3, 4]
+        // let b = a //a와 b가 같은 배열을 가리키고 있음.
+        // b[0] = 1000
+        // a (a의 0번째 값도 100으로 변경됨)
+
+        // let a = [1, 2, 3, 4]
+        // let b = [...a] //a의 값을 가진 완전히 새로운 배열이 만들어짐.
+        // b[0] = 1000
+        // a  //a의 0번째 값이 변경되지 않음.
+        
+        
+        //어떤 브라우저에서든 오류 없이 실행되는 sort()코드. 한글, 문자열, 유니코드, true false든 모두 오류없이 실행됨.
+        function sort(key) {
+            if (click) {
+                click = false;
+                var sortedData = jsonData.sort((a, b) =>
+                    a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0
+                );
+            } else {
+                click = true;
+                var sortedData = jsonData.sort((a, b) =>
+                    a[key] > b[key] ? -1 : a[key] < b[key] ? 1 : 0
+                );
+            }
+
+            let tableBodyData = [];
+
+            for (const iterator of sortedData) {
+                tableBodyData.push(`          
+                <tr>
+                    <td>${iterator["시·도별(1)"]}</td>
+                    <td>${iterator["총인구 (명)"]}</td>
+                    <td>${iterator["1차 접종 누계"]}</td>
+                    <td>${iterator["2차 접종 누계"]}</td>
+                    <td>${iterator["1차 접종 퍼센트"]}</td>
+                    <td>${iterator["2차 접종 퍼센트"]}</td>
+                </tr>
+            `);
+            }
+
+            document.querySelector("#dataTable > tbody").innerHTML =
+                tableBodyData.join("");
+        }
     </script>   
 </body>
 </html>
