@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="myDiv">div 입니다!</div>
+    <div class="myDiv">div 입니다!</div>
+    <div class="myDiv">div 입니다!</div>
+    <div class="myDiv">div 입니다!</div>
+    <div class="myDiv">div 입니다!</div> -->
+    
+    점심 식단
+    <article id="container">
+        <ul>
+            <li>탕수육</li>
+            <li class="item-second">유산슬</li>
+            <li>짜장면</li>
+        </ul>
+    </article>
+
+    저녁 식단
+    <article>
+        <ul>
+            <li>된장국</li>
+            <li class="item-second">김치찌개</li>
+            <li>해장국</li>
+        </ul>
+    </article>
+
+    <!-- <button>HELLO!</button> -->
+    <button>Make me BLUE!</button>
+
+    <script>
+        // id로 접근하는 방법 
+        // console.log(document.getElementById('myDiv'));
+        // 찾아서 저장하고 사용한다. (찾은 요소를 조작하려면 일단 변수에 담아야함.)
+        // const myDiv = document.getElementById('myDiv');
+        
+        //태그로 접근하는 방법(HTMLCollection를 반환함.)
+        // console.log(document.getElementsByTagName('div'));
+        //유사 배열 객체가 반환이 됨. HTML Collection은 유사 배열 객체인데, 출력의 결과가 { } 중괄호가 아니고 [ ] 대괄호로 묶여 있는데 객체로 보는 건가요? 사실 배열도 객체의 일종이다.
+        //변수의 자료형은 원시타입과 참조(객체)타입이 있는데, 유사 배열 객체는 이때말하는 참조(객체)타입에 해당함.
+        //객체
+        const obj= {
+            key: "value",
+            key2: "value",
+        }
+        //유사 배열객체(키값이 숫자(인덱스)인것)
+        const obj2 = {
+            0: "value",
+            1: "value",
+            2: "value",
+        }
+        obj2[0] //이런식으로 배열에서 접근하는것처럼 접근할 수 있음.
+
+        //클래스로 접근하는 방법(HTMLCollection를 반환함.)
+        // console.log(document.getElementsByClassName('myDiv'));
+        
+        // 배운 문법을 바탕으로 HTML 요소들 중 첫 번째 item-second 클래스와 첫번째 li를 콘솔해 출력해보세요 :)
+        console.log(document.getElementsByClassName('item-second')[0]);
+        console.log(document.getElementsByTagName('li')[0]);
+
+        //탐색을 document부터 시작할 필요는 없습니다!!
+        //container 변수 안에 들어있는 것도 돔 노드이기 때문에 돔 노드로부터 시작되면 document에서 시작하는 것과 마찬가지로 찾을 수 있는것임. container요소까지 container변수에 들어있고 나머지 요소들은 밑의 코드를 통해 찾는 것.
+        //자바스크립트 입장에서는 container부터 찾아도되니까 탐색범위가 확 줄어듦. 따라서, 요소를 찾을 때 기준점이 되는 것을 찍어놓고 그것을 기준으로 찾게되면 document부터 찾는 것에 비해서 탐색 속도가 빨라짐. 
+        const container = document.getElementById("container");
+        console.log(container.getElementsByClassName('item-second')[0]);
+        console.log(container.getElementsByTagName('li')[0]);
+
+        // css 선택자로 단일 요소에 접근하기
+        console.log(document.querySelector('.item-second'));
+        console.log(document.querySelector('li')); //li라는 태그를 찾음.
+
+        //css 선택자로 여러 요소에 접근하기 (NodeList를 반환함.)
+        console.log(document.querySelectorAll('li')[3]);
+
+        // 이벤트 타입
+        // const myBtn = document.querySelector("button");
+        // //버튼 요소가 클릭되었을 때. 리스너함수가 작동됨.
+        // myBtn.addEventListener('click', function(){
+        //     console.log("hello world");
+        // })
+
+        //클래스 제어
+        const myBtn = document.querySelector("button"); //버튼을 잡아와서 myBtn에 넣어놓음.
+
+        myBtn.addEventListener('click', function(){
+
+        // blue 라는 클래스의 속성 값을 지정 할 수 있습니다.
+            // myBtn.classList.add("blue"); //blue라는 클래스를 myBtn에 집어넣음.
+
+            // myBtn.classList.remove("blue");     //클래스를 제거합니다. (클래스라는 속성 자체는 남아있음)
+            // myBtn.classList.toggle("blue");    // 클래스를 토글합니다. 없으면 넣어주고, 있으면 제거합니다. (굉장히 많이 사용함)
+            // console.log(myBtn.classList.contains("blue"));   //해당하는 클래스가 있는지 확인합니다. boolean값을 반환함.
+        })
+    </script>
+</body>
+</html>

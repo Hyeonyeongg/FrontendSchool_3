@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .canvas {
+            width: 500px;
+            height: 500px;
+            background-color: black;
+            margin: 0 auto;
+        }
+
+        ul {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .canvas.red {
+            background-color: red;
+        }
+
+        .canvas.yellow {
+            background-color: yellow;
+        }
+
+        .canvas.green {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas"></div>
+    <ul>
+        <li>
+            <button type="button" class="btn-red">빨강</button>
+        </li>
+        <li>
+            <button type="button" class="btn-yellow">노랑</button>
+        </li>
+        <li>
+            <button type="button" class="btn-green">초록</button>
+        </li>
+    </ul>
+    <script>
+        const canvas = document.querySelector('.canvas');
+        const btnRed = document.querySelector('.btn-red');
+        const btnYellow = document.querySelector('.btn-yellow');
+        const btnGreen = document.querySelector('.btn-green');
+
+        const btnArr = [btnRed, btnYellow, btnGreen];
+
+        //화살표 함수 인자가 하나만 괄호 생략 가능. (item)
+        btnArr.forEach(item => { //각각의 버튼을 순회하면서 이벤트를 삽입해줌. 이벤트리스너는 한번붙으면 item에 계속 붙어있음.
+            item.addEventListener('click', () => {
+                canvas.classList.remove('red', 'yellow', 'green');
+                if(item.classList.contains("btn-red")){ 
+                    canvas.classList.add('red');
+                } else if (item.classList.contains("btn-yellow")) {
+                    canvas.classList.add('yellow');
+                } else if(item.classList.contains("btn-green")) {
+                    canvas.classList.add('green');
+                }
+            })
+        }) 
+
+
+        // btnRed.addEventListener('click', () => {
+        //     canvas.classList.remove('red', 'yellow', 'green'); //클래스를 여러개 넣어도됨.
+        //     canvas.classList.add('red');
+        // })
+
+        // btnYellow.addEventListener('click', () => {
+        //     canvas.classList.remove('red', 'yellow', 'green');
+        //     canvas.classList.add('yellow');
+        // })
+
+        // btnGreen.addEventListener('click', () => {
+        //     canvas.classList.remove('red', 'yellow', 'green');
+        //     canvas.classList.add('green');
+        // })
+    </script>
+
+    <!-- 
+        or연산자를 이용했을 때 왼쪽부터 실행해서 만나는 첫번째 truthy값 혹은 마지막 falsy값을 반환함
+        and연산자를 이용했을 때 첫번째 falsy값 혹은 가장 마지막 truthy값을 반환함.
+        아래 예제에서는 첫번째도 거짓이고 두번째도 거짓이라고 가정. 따라서, 마지막 falsy값을 반환하게 됨. contains가 반환하는 값이 boolean이기 때문에 콘솔에 false가 찍힘.
+        console.log(
+            canvas.classList.contains('yellow') || canvas.classList.contains('green')
+        );
+    -->
+</body>
+</html>

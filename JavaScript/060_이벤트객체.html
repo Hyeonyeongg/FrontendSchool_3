@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <article class="parent">
+        <ol>
+            <li><button class="btn-first" type="button">버튼1</button></li>
+            <li><button type="button">버튼2</button></li>
+            <li><button type="button">버튼3</button></li>
+        </ol>
+    </article>
+    <script>
+        const btnFirst = document.querySelector('.btn-first');
+        btnFirst.addEventListener('click', (event) => {
+            console.log(event);//인자에 event를 생략해도, event가 출력이 됨. 하지만, 반드시 event라는 이름으로 콘솔에 찍어야 출력이됨. e나 test이런것으로 출력하면 안됨. 인자를 생략해도 event라는 약속된 이름으로 이벤트 객체가 자동으로 전달되는 것 같음. 
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <!-- <ul></ul>
+    <button>Make me MORE!</button> -->
+
+    <div id="parentElement">
+        <span id="childElement">hello guys~</span>
+    </div>
+
+    <script>
+    // const myBtn = document.querySelector("button");
+    // const myUl = document.querySelector("ul");
+
+    // myBtn.addEventListener('click', function(){
+    //     for(let i=0; i < 5; i++){ //요소를 반복적으로 생성이 가능함.
+    //         //li 요소를 생성합니다.
+    //         const myLi = document.createElement('li');
+            
+    //         //text노드를 생성합니다.
+    //         const myTxt = document.createTextNode('안녕하세용!' + i); //텍스트 노드가 만들어져서 myTtx에 저장됨.
+
+    //         //자식으로 요소를 배치합니다.
+    //         myLi.appendChild(myTxt);
+    //         myUl.appendChild(myLi)
+    //     }
+    //     const li = document.querySelector('li');
+    //     //자식요소를 제거합니다.
+    //     myUl.removeChild(li);
+    // })
+
+    const span = document.createElement("span"); //span 요소를 생성
+    const myText = document.createTextNode('good morning!');
+    span.appendChild(myText);
+    const sibling = document.getElementById("childElement"); 
+    const parentDiv = document.getElementById("parentElement");
+    
+    //span 요소를 sibling의 앞으로 배치합니다.
+    parentDiv.insertBefore(span, sibling); //parentDiv안의 어딘가에 배치를 하려고 하는데 span이라는 요소를 sibling앞에다가.  
+    </script>
+</body>
+</html>
