@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>로컬스토리지</title>
+    </head>
+    <body>
+        <script>
+            // setItem(key, value) – 키-값 쌍 저장
+            // getItem(key) – 키에 해당하는 값 호출 
+            // removeItem(key) – 해당 값 삭제
+            // clear() – 모든 데이터 삭제
+            // key(index) – 인덱스(index)에 해당하는 키 호출
+            // length – 저장된 항목의 개수
+
+            const memo = []
+            memo.push('메모1');
+            memo.push('메모2');
+            localStorage.setItem('메모', memo);
+
+            const memo2 = {}
+            memo2['one'] = '메모1' 
+            memo2['two'] = '메모2' 
+            //저장할 때 문자열로 변환해서 저장해야 함. 웹 스토리지는 오직 문자형 데이터만 지원함. 따라서, 로컬 스토리지에 쓸 데이터를 JSON 형태로 직렬화(JSON.stringify())하고, 읽은 데이터를 JSON 형태로 역직렬화(JSON.parse())를 해주면 원본의 데이터를 그대로 얻을 수 있음.
+            localStorage.setItem('메모2', memo2); //memo2의 오브젝트형태를 문자열로 바꾼 [object Object]가 저장됨.
+
+            console.log(localStorage.getItem('메모'));
+            console.log(localStorage.getItem('메모').split(","));
+
+            localStorage.setItem('one', '하나');
+            localStorage.setItem('two', '둘');
+            console.log(localStorage.getItem('one'));
+            console.log(localStorage.getItem('two'));
+
+            const memo3 = {}
+            memo3['one'] = '메모1' 
+            memo3['two'] = '메모2'
+            // JSON.stringify() 메서드는 JavaScript 값이나 객체를 JSON 문자열로 변환
+            console.log(JSON.stringify(memo3)); // {"one":"메모1","two":"메모2"}가 문자열로 변환되어 출력됨. 문자열로 변환되었기 때문에 0번째 값은 중괄호{임.
+
+            localStorage.setItem("메모3", JSON.stringify(memo3));
+            console.log(localStorage.getItem("메모3"));
+            // JSON.parse() 메서드는 JSON 문자열의 구문을 분석하고, 그 결과에서 JavaScript 값이나 객체를 생성함.
+            console.log(JSON.parse(localStorage.getItem("메모3")));      
+        </script>
+    </body>
+</html>

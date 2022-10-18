@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>D3</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <style>
+            rect:hover {
+                stroke: black;
+                stroke-width: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>확진자수 현황</h1>
+        <div class="canvas"></div>
+        <script>
+            const width = 800;
+            const height = 800;
+            let [mt, mb, mr, ml] = [50, 50, 50, 50]; //이렇게 많이 줌. 그러면 오른쪽 값들만 수정하면 나중에 크기 조절을 간편하게 할 수 있음.
+
+            const svg = d3
+                .select(".canvas")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            // console.log(mt, mb, mr, ml)
+
+            const graphWidth = width - ml - mr;
+            const graphHeight = height - mt - mb;
+
+            const graph = svg
+                .append("g")
+                .attr("width", graphWidth)
+                .attr("height", graphHeight)
+                .attr("transform", `translate(${ml}, ${mt})`);
+
+            const xAxisG = graph
+                .append("g")
+                .attr("transform", `translate(0, ${graphHeight})`);
+            const yAxisG = graph.append("g");
+            // https://raw.githubusercontent.com/LiveCoronaDetector/livecod/master/data/data.json
+            // https://livecorona.co.kr/data/data.json
+            d3.json(
+                "https://raw.githubusercontent.com/LiveCoronaDetector/livecod/master/data/data.json"
+            )
+                .then(function (data) {
+                    [_, ...data] = [...data]; //스프레드 문법을 이용하여 데이터를 복사하는데, 맨 앞에 데이터를 빼고 복사함. 첫번째 데이터만 빼고, 나머지 데이터만. 왜냐하면 전국 데이터는 필요없어서. 서울 부터 그래프를 그리면되니까 맨 앞에 것을 하나 빼준것임. 
+                    console.log(data);
+
+                    const x = d3
+                        .scaleBand()
+                        .domain(data.map((item) => item.지역이름))
+                        .range([0, graphWidth])
+                        .padding(0.25);
+
+                    const y = d3
+                        .scaleLinear()
+                        .domain([0, d3.max(data, (d) => d.확진자수)])
+                        .range([graphHeight, 0]);
+
+                    const bars = graph.selectAll("rect").data(data);
+
+                    bars.enter()
+                        .append("rect")
+                        .attr("height", (d) => graphHeight - y(d.확진자수))
+                        .attr("width", x.bandwidth)
+                        .attr("fill", "hotpink")
+                        .attr("x", (d) => x(d.지역이름))
+                        .attr("y", (d) => y(d.확진자수));
+
+                    const line = d3
+                        .line()
+                        .x((d) => x(d.지역이름) + 15)
+                        .y((d) => y(d.확진자수))
+                        .curve(d3.curveBasis);
+
+                    bars.enter()
+                        .append("path")
+                        .attr("fill", "none")
+                        .attr("stroke", "blue")
+                        .attr("stroke-width", "2px")
+                        .attr("d", line(data));
+
+                    bars.enter()
+                        .append("text")
+                        .attr("x", (d) => { //if문으로 감싼 이유는? 막대에 텍스트를 주고 싶음. 그런데 숫자(10, 100, 1000 등)에 따라 중앙정렬이 되지 않음. 그래서 자릿수마다 x축을 왔다갔다 하는것.
+                            if (d.확진자수 >= 1000) {
+                                return x(d.지역이름) + 3;
+                            } else if (d.확진자수 >= 100) {
+                                return x(d.지역이름) + 6;
+                            } else if (d.확진자수 >= 10) {
+                                return x(d.지역이름) + 9;
+                            } else if (d.확진자수 >= 1) {
+                                return x(d.지역이름) + 12;
+                            }
+                            return x(d.지역이름);
+                        })
+                        .attr("y", (d) => y(d.확진자수) - 5)
+                        .text((d) => d.확진자수)
+                        .style("font-size", "12px");
+                    // .attr('text-anchor', 'end')
+
+                    const xAxis = d3.axisBottom(x);
+                    const yAxis = d3
+                        .axisLeft(y)
+                        .ticks(3)
+                        .tickFormat((d) => d + "명");
+
+                    xAxisG.call(xAxis);
+                    yAxisG.call(yAxis);
+
+                    xAxisG
+                        .selectAll("text")
+                        .attr("fill", "blue")
+                        .attr("transform", "rotate(-45)") //지역명이 길어지면 텍스트가 겹치지 때문에 그런 것을 방지하고자 밑에 축은 보통 45도 기울임.)
+                        .attr("text-anchor", "end");
+                })
+                .catch(function (err) {
+                    console.log("실패!!");
+                    console.error(err);
+                });
+        </script>
+    </body>
+</html>
