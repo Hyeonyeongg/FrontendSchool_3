@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <h3>원본 요소:</h3>
+    <p id="source">
+        <style>#source { color: red; }</style>
+        아래에서<br>이 글을<br>어떻게 인식하는지 살펴보세요.
+        <span style="display:none">숨겨진 글</span>
+    </p>
+    <h3>textContent 결과:</h3>
+    <textarea id="textContentOutput" rows="6" cols="30" readonly>...</textarea>
+    <h3>innerText 결과:</h3>
+    <textarea id="innerTextOutput" rows="6" cols="30" readonly>...</textarea>
+<script>
+    const source = document.getElementById('source');
+    console.log("textContent: " + source.textContent); 
+    console.log("innerText: " + source.innerText); //텍스트 내에 렌더링 가능한 html코드가 있으면 그 결과를 반영함. <br>, dipslay:none등이 반영됨. 하지만, <style>#source { color: red; }</style> 같은 것들은 반영이 되지 않음. 화면에 렌더링 가능한 것만 반영이 됨.
+    
+    // const textContentOutput = document.getElementById('textContentOutput');
+    // const innerTextOutput = document.getElementById('innerTextOutput');
+
+    //textContentOutput.innerHTML = source.textContent; //굳이 innerHTML로 넘겨줘서 헷갈렸던것. innerHTML은 여기서는 그냥 신경쓰지 않아도됨. 얘는 여기서 그냥 뿌려주는 역할이라고 생각하기.
+    // innerTextOutput.innerHTML = source.innerText;
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <h1>나의 todo list</h1>
+    <p>1. 오늘 저녁에는 부대찌게를 끓여 먹겠다.<button type="button">삭제</button></p>
+    <p>2. 후식으로 슈팅스타를 먹겠다.<button type="button">삭제</button></p>
+    <p>3. 자기 전에 반드시 내일 아침 메뉴를 생각해두겠다.<button type="button">삭제</button></p>
+    
+    <script>
+        const txts = document.querySelectorAll('p');
+        const btns = document.querySelectorAll('button');
+
+        //txts.addEventListener를 하면 오류 발생. texts에는 현재 노드 리스트가 들어있기 때문에 순회를 돌면서 각각의 요소에 이벤트 핸들러를 부착해줘야 함. txts는 배열은 아니고, 노드리스트로 배열과는 다름. 
+
+        //IE에서 for of문 작성 불가
+        // for (const item of txts) {
+        //     item.addEventListener('click', ()=> {
+        //         alert(event.target.textContent.slice(0, -2)); //현재 이벤트가 발생한 요소안에 들어있는 text를 가져옴. 그런데, p 태그 안의 button 안에 들어있는'삭제'까지 가져오기 때문에 삭제는 따로 잘라줘야함. 그래서 slice를 통해 뒤에서부터 두글자를 제외하고 잘라줌. (참고) textContent는 개행문자도 같이 전달함. 
+        //     })
+        // }
+
+        //IE는 nodelist에 forEach문 작성 불가
+        //그래서, forEach문을 사용했는데 forEach에도 문제가 있음. (여기서, foreach는 array에서 사용하는 것 아닌가? 라고 생각할 수 있지만 nodelist에서 사용할 수 있는 forEach문이 따로 존재함.) nodelist에서 지원하는 forEach문은 IE를 지원하지 않음. 
+        // txts.forEach(item => {
+        //     item.addEventListener('click', ()=> { //각각의 태그에 이벤트를 붙여줌.
+        //         alert(event.target.textContent.slice(0, -2));
+        //     })
+        // })
+        
+
+        // IE대응 forEach문 코드 리팩토링 (IE에서 nodelist에 forEach를 사용하고 싶을 경우 아래처럼 사용해야 함.)
+        // 따라서, IE를 지원해야 한다면  Array로부터 forEach를 빌려와서 사용할 수 있음.
+        // 그리고, call()을 통해 해당 메서드(forEach)의 호출 객체가 txts임을 지정(txts가 this가 됨)해주고, 두 번째 인자에는 전달할 아규먼트를 넣어줄 수 있는데 여기서는 함수를 전달해줌. 즉, Array.prototype.forEach를 실행하는데 얘를 호출한 것은 txs임을 명시해주고, 순회하면서 작동할 함수를 전달해준 것임. (this는 자신을 호출한 것을 가리킨다. forEach의 this가 가리키고 있는 것이 txts이므로 item에 text의 값이 들어가는 느낌. 그래서 결국에는 txts.forEach(item=>{}) 이렇게 되는 느낌.)
+        //(참고) nodelist는 nodelist의 forEach문만 사용가능한 것이 아니라 Array의 forEach를 빌려와서 사용할 수 있음.
+        //(참고) prototype은 array객체 안에서 사용하는 여러가지 메서드나 변수를 저장하는 공간. 여기 안에 forEach가 있음
+        Array.prototype.forEach.call(txts, (item) => { 
+            item.addEventListener('click', ()=> { //각각의 태그에 이벤트를 붙여줌.
+                alert(event.target.textContent.slice(0, -2));
+            })
+        }) 
+
+        for (const item of btns) {
+            item.addEventListener('click', (event) => {
+                const result = confirm('삭제 하시겠습니까?') //confirm은 boolean값을 반환함.
+                // 삭제하시겠습니까? 알림창이 뜨고 그다음 빈 창이 뜸.
+                // 해당 버튼의 이벤트가 끝나고, 버블링으로 인해 부모인 p태그의 이벤트리스너가 실행됨.
+                // 43번째 줄에서, target이 버튼이 되고 버튼안에 있는 텍스트인 '버튼'을 다 잘라버린것.(slice)
+                // 그래서 아무것도 없는 빈 alret창이 뜸. 따라서, 부모의 이벤트가 실행되지 않도록 버블링 전파를 막아줘야함.
+                event.stopPropagation(); //현재 이벤트 이후의 버블링 전파가 막아짐. 따라서, 부모의 이벤트가 실행되지 않음.
+                if(result) {
+                    item.parentElement.remove(); //버튼의 부모요소(p)를 제거해줌.
+                }  
+            })
+        }
+    </script>
+</body>
+</html>

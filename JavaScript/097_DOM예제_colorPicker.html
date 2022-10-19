@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        /* :root는 가상클래스로 문서 트리의 루트 요소를 선택함. 따라서, html 문서에서 루트 요소는 <html>이므로,  html요소를 선택한것과 똑같은 효과. 하지만, 명시도는 :root가 더 높음. 가상 '클래스'이기 때문*/
+        :root {
+            --main-bgColor: teal;
+            --main-txtColor: white;
+        }
+        
+        body {
+            padding: 0;
+            margin: 0;
+            font-size: 1.5em;
+            background-color: var(--main-bgColor);
+        }
+
+        .wrapper {
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .picker {
+            display: inline-block;
+        }
+
+        .picker+.picker {
+            margin-left: 30px;
+        }
+
+        main {
+            color: var(--main-txtColor);
+        }
+    </style>
+</head>
+<body>
+    <section class="wrapper">
+        <article class="picker">
+            <label for="bg">배경색 : </label>
+            <input type="color" id="bg" class="inp-picker" data-id="bgColor">
+        </article>
+        <article class="picker">
+            <label for="txt">글씨색 : </label>
+            <input type="color" id="txt" class="inp-picker" data-id="txtColor"> <!--접두사 data로 선언된 속성은 자바스크립트로 접근할 때는 dataset으로 접근할 수 있음.-->
+        </article>
+    </section class="picker"> 
+    <main>
+        <h1>Color Picker!!</h1>
+        <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus delectus tempore velit minus quidem impedit a. Tempore quibusdam perspiciatis veniam ex, voluptas fuga enim beatae explicabo ea minus quod eveniet?
+        </p>
+    </main>
+    <script>
+        const inpPicker = document.querySelectorAll('.inp-picker');
+
+        inpPicker.forEach(item => {
+            //'input' 이벤트 타입은 input값에 변화가 있을 때 이벤트가 트리거됨.
+            item.addEventListener('input', () => {
+                const name = `--main-${event.target.dataset.id}`;
+
+                const root = document.querySelector(':root');
+                root.style.setProperty(name, event.target.value); //--main-bgColor 혹은 --main-txtColor의 값을 사용자가 선택한 색깔의 값으로 바꿔줌. root 요소의 proerty를 설정할 수 있음. style.setProperty는 CSS속성을 재할당시키는데 쓰임.
+                //console.log(name);
+            })
+        })
+    </script>
+</body>
+</html>
+

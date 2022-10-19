@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <article class="parent">
+        <ol>
+            <li><button class="btn-first" type="button">버튼1</button></li>
+            <li><button type="button">버튼2</button></li>
+            <li><button type="button">버튼3</button></li>
+        </ol>
+    </article>
+    
+    <script>
+        const parent = document.querySelector('.parent'); //parent에 이벤트를 등록함.
+        parent.addEventListener('click', function (event) {
+            console.log(event.target); //이벤트가 발생한 진원지. 어디를 클릭했느냐. parent에 이벤트를 달았는데 ol, li, button등이 찍힘.  
+            console.log(event.currentTarget); //이벤트 리스너가 연결된 요소(article) 
+        })
+        //캡쳐링 버블링 현상은 이벤트가 달린 부모 자식 요소 간에서만 생기는 것이 아니라, 부모 자식을 왔다 갔다하면서 이벤트가 중간에 있으면 실행시키는 것임. 
+        //위의 코드에서 버튼을 클릭했을 때 버튼에도 캡쳐링, 버블링현상이 일어나되 버튼은 이벤트 핸들러가 없으니까 그냥 넘어가는 것임.
+    </script>
+</body>
+</html>
