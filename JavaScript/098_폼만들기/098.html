@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설문조사</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form id="mainForm">
+        <fieldset>
+            <legend>JS 스터디 모집 설문조사</legend>
+            <progress max="100" value="0" class="bar-progress"></progress>
+            <p class="msg-notice">설문지를 작성해주세요!</p>
+
+            <label for="q1">질문1. 무엇을 가장 배우고 싶으세요?</label>
+            <input type="text" id="q1" required>
+            <label for="q2">질문2. 시간은 언제가 적당한가요?</label>
+            <input type="text" id="q2" required>
+            <label for="q3">질문3. 몇 시간정도 예상하세요?</label>
+            <input type="text" id="q3" required>
+            <label for="q4">질문4. 난이도를 조정한다면?</label>
+            <input type="text" id="q4" required>
+            <label for="q5">질문5. 끝으로 하고싶은 말이 있나요?</label>
+            <input type="text" id="q5" required>
+
+            <button type="submit">제출하기</button>
+            <button type="reset">초기화</button>
+        </fieldset>
+    </form>
+
+    <script>
+        const mainForm = document.querySelector("#mainForm");
+        const progressBar = mainForm.querySelector('.bar-progress');
+        const message = mainForm.querySelector('.msg-notice');
+        const inputs = mainForm.querySelectorAll('input');
+        const btnReset = mainForm.querySelector('button[type="reset"]'); //속성 선택자. rest이라는 타입을 가지고 있는 버튼을 잡아옴.
+
+
+        // 유효한 인풋의 갯수를 저장  ('keyup은 키보드를 뗄떼마다 이벤트가 트리거 됨.')
+        mainForm.addEventListener('keyup', () => {
+            //keyup 이벤트가 있을 때마다 인풋을 순회하면서 유효한 인풋이 몇개 있는지 저장해줌. keyup을 실행할 때마다 0으로 초기화해줌.
+            // let validCounter = 0;
+
+            // inputs.forEach((item) => {
+            //     console.log(item.validity); //validity는 요소 안에 있는 값이 유효한지 아닌지를 알려주는 여러가지 정보가 들어있음.  validity에는 valid라는 프로퍼티가 있는데, 이 값이 true라는 것은 이 요소에 들어있는 값이 valid하다는 것을 의미함.
+            //     if (item.validity.valid) { 
+            //         validCounter++; //유효한 값이 있다면 증가시켜줌.
+            //     }
+            // })
+
+            //필터 메서드는 조건을 통과하는 원소들만 모아서 새로운 배열을 반환함. 즉, 순환을 해야하는데 순환 안에서 조건이 필요하다면 filter를 사용하면 됨. 따라서, 위의 코드를 이와같이 수정할 수 있음.
+            //그런데, filter은 array의 메서드로 nodelist에는 존재하지 않는 메서드임. 그래서, inputs.filter로 사용할 수 없고, 메서드를 빌려와야함. call를 사용하여 해당 메서드가 참조하는 객체를 바꿔줌. 즉, 노드리스트가 array에 있는 filter를 빌려오는 것임. 
+            const result = Array.prototype.filter.call(inputs, (item) => {
+                return item.validity.valid //이 조건식이 true인 원소만 모아서 새로운 배열을 반환함.
+            });
+            console.log(result);
+
+            //아래와 같이 작성해도 상관없음. 또한, Arrayfrom을 사용해도 됨. Arrayfrom은 배열이 아닌것을 배열로 바꿔줌.
+            // const result = [...inputs].filter((item) => {
+            //     return item.validity.valid
+            // });
+            // const result = Array.from(inputs).filter((item) => {
+            //     return item.validity.valid
+            // })
+
+            
+            switch (result.length) { //validCouter
+                case 1:
+                    message.textContent = "좋습니다! 계속 진행하세요!";
+                    progressBar.setAttribute('value', 20);
+                    break;
+
+                case 2:
+                    message.textContent = "좋은 답변이군요! 계속 진행하세요!";
+                    progressBar.setAttribute('value', 40);
+                    break;
+
+                case 3:
+                    message.textContent = "절반 이상 지났습니다! 계속 진행하세요!";
+                    progressBar.setAttribute('value', 60);
+                    break;
+
+                case 4:
+                    message.textContent = "거의 완료되었습니다! 계속 진행하세요!";
+                    progressBar.setAttribute('value', 80);
+                    break;
+
+                case 5:
+                    message.textContent = "이제 제출해주세요!";
+                    progressBar.setAttribute('value', 100);
+                    break;
+
+                default:
+                    //케이스 1부터 5까지 속하지 않을 경우를 처리해줌. 마지막이니까 break는 필요 없음.
+                    message.textContent = "설문지를 작성해주세요!";
+                    progressBar.setAttribute('value', 0);
+
+            }
+        })
+
+        //초기화 버튼을 누르면 progress bar와 텍스트가 처음으로 돌아가도록 만들어줌.
+        btnReset.addEventListener('click', () => {
+            message.textContent = "설문지를 작성해주세요!";
+            progressBar.setAttribute('value', 0);
+        })
+    </script>
+</body>
+
+</html>
