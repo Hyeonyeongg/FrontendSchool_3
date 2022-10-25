@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        class Robot {
+            constructor(name) {
+                this.name = name;
+            }
+
+            sayYourName() {
+                console.log(`삐리비리. 제 이름은 ${this.name}입니다. 주인님.`);
+            }
+        }
+
+        class BabyRobot extends Robot { //Robot 클래스를 상속 받고 있음.
+            constructor(name) { 
+                super(name); //부모의 생성자를 참조한다.
+                this.ownName = '아이크';
+            }
+
+            // constructor(name) { super를 사용하면 이렇게 되는 것과 마찬가지.
+            //     this.name = name;
+            // }
+
+            // sayYourName() { //자식에 동일한 함수를 만들면 부모의 함수를 덮어씌움. 오버라이딩. 부모 메서드를 재 정의한다.
+            //     console.log(`삐리비리. 제 이름은 ${this.name}입니다. 주인님.`);
+            // }
+
+            sayBabyName() {
+                // 또한 상속을 받게되면 부모 클래스의 메소드를 사용할 수 있게 됩니다. 때문에 this로 접근 할 수 있습니다.
+                this.sayYourName(); //부모의 sayYourName을 실행함. 여기서 this는 BabyRobot으로 만들어진 인스턴스. Robot을 상속받기때문에 부모에 있는 SayYourName을 실행시킬 수 있다. 상속을 통해 BabyRobot내에 sayYourName이 들어와있으므로 해당 인스턴스의 메서드를 사용한다라고 생각해도 됨. (사실은 프로토타입 체이닝.)
+                console.log('Suceeding you, Father!');
+            }
+        }
+
+        const babyRobot = new BabyRobot('브랜든'); 
+        babyRobot
+        babyRobot.ownName
+        babyRobot.name
+        babyRobot.sayYourName();
+        babyRobot.sayBabyName();
+    </script>
+</body>
+</html>

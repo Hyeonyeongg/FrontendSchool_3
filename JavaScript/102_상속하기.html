@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        // 부모 생성자를 상속받는 방법
+        function Parent() {
+            this.name = '재현';
+        }
+        Parent.prototype.rename = function (name) {
+            this.name = name;
+        }
+        Parent.prototype.sayName = function () {
+            console.log(this.name);
+        }
+
+        function Child() {
+            Parent.call(this); //call은 함수의 메서드.  Parent는 생성자 함수이기 때문에  call이란 메서드를 쓸 수 있음. call을 통해 this의 대상을 변경할 수 있음. 생성자 함수 안의 this는 인스턴스를 가리킴. 즉, Child생성자 함수가 만드는 인스턴스르 가리키기떄문에 그 this를 Parent의 this랑 연결시킴.
+        }
+
+        Child.prototype = Object.create(Parent.prototype);
+        Child.prototype.canWalk = function () {
+            console.log('now i can walk!!');
+        }
+
+        const child = new Child(); 
+        console.log(child.name);
+        console.log(child.rename('현영')) //부모의 프로토타입에 있는 메서드를 자식이 사용하고 있음. 상속받았기 때문에 사용 가능
+        console.log(child.sayName()); 
+        console.log(child)
+    </script>
+</body>
+</html>

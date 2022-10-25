@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        // 프로토타입을 사용하지 않았을때 인스턴스들의 메소드를 비교해보세요!!!
+        function NewFactory(name){
+            this.name = name;
+            this.sayYourName = function(){
+                console.log(`삐리비리. 제 이름은 ${this.name}입니다. 주인님.`);
+            }
+        }
+
+        const robot1 = new NewFactory('게리');
+        const robot2 = new NewFactory('뮤라');
+        const robot3 = new NewFactory('알리');
+        
+        console.log(robot1.sayYourName === robot2.sayYourName) //false. robot1과 robot2에 들어있는 sayYourName은 다름. 똑같은 함수를 세 개의 다른 인스턴스에서 사용하고 있는것. 함수가 등록되어있는 메모리 주소가 전부다 다름. 즉, roboto1, robot2, robot3를 생성할 때마다 메모리 어딘가에서 함수를 선언하고 있는 것과 마찬가지. 매우 비효율적임!
+
+
+
+        function NewFactory2(name) {
+            this.name = name;
+        }
+
+        NewFactory2.prototype.sayYourName = function () { //prototype은 어떠한 공간을 가리키는데 그 공간에 sayYourName이라는 프로퍼티를 만들고 그 안에 함수를 할당하고 있음. 생성자 함수로 만들어진 인스턴스들이 prototype에 접근할 수 있게됨. 
+            console.log(`삐리비리. 제 이름은 ${this.name}입니다. 주인님.`);
+        }
+
+        const robo1 = new NewFactory2('게리');
+        const robo2 = new NewFactory2('뮤라');
+        console.log(robo1.sayYourNmae === robo2.sayYourNmae) //(true) 서로 동일한 주소를 참조하고 있음. 
+        console.log(robo1.__proto__=== NewFactory2.prototype) // (true)
+
+
+
+        // 메뉴 추천 로봇을 프로토타입으로 업그레이드하기
+        function FoodPicker(foodNames) {
+            this.menu = foodNames;
+        }
+
+        FoodPicker.prototype.sayMenu = function () {
+            console.log(this.menu[Math.floor(Math.random() * this.menu.length)]);
+        }
+
+        let menuBot = new FoodPicker(['짜장면', '청국장', '김치찌게']); 
+        //인스턴스 안에 있는 proto가 생성자 함수의 prototype을 참조함으로써 sayMenu에 접근이 가능하다. 인스턴스에는 생성자 함수의 prototype을 참조하는 proto가 있음. proto에서 생성자 함수의 prototype 정보에 접근이 가능함.
+        //prototype은 인스턴스에 존재하지 않음. 인스턴스에 존재하는것은 prototype을 바라보고 있는 ptoto다!    
+        let menuBot2 = new FoodPicker(['짜장면', '청국장', '김치찌게']);
+        console.log(menuBot1.pickMenu === menuBot2.pickMenu); //true
+
+
+
+        //객체를 생성자 함수로 전환해 봅시다!
+        function Me(name, address, phoneNum) {
+            this.name = name;
+            this.address = address;
+            this.phoneNum = phoneNum; 
+        }
+
+        Me.prototype.canWalk = function () {
+            console.log('웨이드가 걷는다.');
+        }
+
+        Me.prototype.teaching = function(student) {
+            student.levelUp();
+        }
+
+        const me = new Me('웨이드', '한국', '010-0000-0000');
+        console.log(me);
+        me.canWalk();
+        //const me2 = new Me('홍길동', '한국', '010-0000-0000');
+        //cosnole.log(me2.canWalk = me.canWalk) //canWlak가 프로토타입에 등록되어있기 때문에 동일하다. true
+
+        function Student(level) {
+            this.level = level;
+        }
+
+        Student.prototype.levelUp = function() {
+            this.level++;
+        }
+
+        const student = new Student(1);
+        me.teaching(student);
+        console.log(student); //레벨이 2로 상승됨. 
+        
+    </script>
+</body>
+</html>

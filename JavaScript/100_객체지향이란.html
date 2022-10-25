@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        const me = {
+            name : '한재현',
+            address : '제주도 제주시 제주 1길',
+            phoneNum : '010-0000-0000',
+            canWalk : function(){
+                console.log('재현이가 걷는다.');
+            },
+            teaching : function(student){ 
+                student.levelUp(); //studnet의 levelUp이라는 함수를 실행시키고 있음. 즉, 전달받은 객체에서 levelUp함수를 실행시킴. (객체와 객체가 상호작용하고 있음)
+            }
+        }
+
+        const student = {
+            level: 1, 
+            levelUp : function(){ 
+                this.level++; //this는 studnet를 의미함. 메서드 안의 this는 자기를 호출하는 객체를 가리킨다. level이 1증가됨.
+            }
+        }
+
+        me.teaching(student); //레벨이 2가 됨.
+        me.teaching(student); //레벨이 3이 됨.
+
+        //me와 동일한 구조의 객체를 하나 더 만들어보자.
+        const you = me; 
+        me.name = '에반'; //이렇게 하면 you의 name도 바뀌게 됨. me가 들어있는 주소가 you에 할당되기 때문. 그래서 그냥, me를 복붙해서 이름을 you로 바꾸는 수밖에 없음. 이렇게 하면 me의 name을 바꿔도 you는 바뀌지 않게됨. 하지만, 비효율적인 방법.
+
+        // 실습 (나를 추상화하기)
+        // const me = {
+        //     name: '현영이',
+        //     address: '한국',
+        //     phoneNum: '010-0000-0000',
+        //     canSleep: function() {
+        //         console.log('현영이가 잔다.');
+        //     },
+        //     study: function(feDevloper) {
+        //         feDevloper.levelUp();
+        //     }
+        // }
+
+        // const feDevloper = {
+        //     level: 1,
+        //     levelUp: function(){
+        //         this.level++;
+        //     }
+        // }
+
+        // me.study(feDevloper);
+        // me.study(feDevloper);
+
+        function NewFactory(name){
+            this.name = name;//this는 인스턴스(robot1, robot2 등)를 가리킴.
+            this.sayYourName = function(){
+                console.log(`삐리비리. 제 이름은 ${this.name}입니다. 주인님.`);
+            }
+        }
+
+        let robot1 = new NewFactory('브랜든'); //NewFactory로 만들어진 인스턴스가 robot1에 들어감.
+        let robot2 = new NewFactory('웨이드'); //생성자 함수를 이용하면 서로 다른 독립적인 객체를 마구마구 찍어낼 수 있음.
+
+
+
+        function NewFactory(food) {
+            this.food = food;
+            const chosenFood = food[Math.floor(Math.random() * food.length)] //MMath.random은 0~1미만. 1은 포함이 안됨. 0~length미만의 값을 구하게 됨.
+            this.choice = function () {
+                return (`이번에는 ${chosenFood}을 드시면 됩니다.`);
+            };
+        }
+
+        let whatToEat = new NewFactory(["짜장면", "짬뽕", "탕수육", "깐풍기", "유린기", "볶음밥"]);
+        let whatToEat2 = new NewFactory(["짜장면", "짬뽕", "탕수육", "깐풍기", "유린기", "볶음밥"]);
+
+        console.log(whatToEat.choice());
+
+
+        //실습: 음식 메뉴를 랜덤하게 뽑아내는 로봇 객체의 생성자 만들기
+        // function Food(menu){
+        //     this.menu = menu;
+        //     this.pickMenu = function(){
+        //         const num = Math.floor(Math.random() * this.menu.length); 
+        //         console.log(this.menu[num]);
+        //     }
+        // }
+
+        // let pick1 = new Food(['김밥', '떡볶이', '순대']);
+        // let pick2 = new Food(['짬뽕', '탕수육', '팔보채', '짜장면']);
+
+        // function Factory(arr) {
+        //     const i = Math.floor(Math.random() * arr.length)
+        //     this.유닛명 = arr[i].유닛
+        //     this.체력 = arr[i].체력
+        //     this.공격력 = arr[i].공격력
+        // }
+
+        // const unit1 = new Factory([{ 유닛: '벌쳐', 체력: 75, 공격력: 20 }, { 유닛: '탱크', 체력: 150, 공격력: 30 }, { 유닛: '골리앗', 체력: 125, 공격력: 12 }])
+        // console.log(unit1);
+    </script>
+</body>
+</html>
