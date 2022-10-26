@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        function Parent() {
+            this.name = '재현';
+        }
+        Parent.prototype.rename = function (name) {
+            this.name = name;
+        }
+        Parent.prototype.sayName = function () {
+            console.log(this.name);
+        }
+        
+        function Child() {
+            Parent.call(this); 
+        }
+
+        Child.prototype = Object.create(Parent.prototype); 
+        
+                
+        Child.prototype.canWalk = function () { // Object.create를 통해 새로 만들어진 객체 공간에 canWalk가 만들어지게 됨.
+            console.log('now i can walk!!');
+        }
+
+        const child = new Child(); //child를 찍으면 안에 name이라는 프로퍼티를 상속받고 있음. name프로퍼티는 call을 통해서 this(child)랑 Parent가 연결되어있기 때문에 Parent안에있는 this를 마치 자기것처럼사용하고 있는 것.
+
+        child.__proto__ === Child.prototype //true
+        //그런데 왜 child의 proto는 Parent를 가리키고 있다고 출력되는 것인가.?
+        // Objcet.create메서드 떄문. 이 메서드는 지정된 프로토타입 객체 및 속성을 갖는 새 객체를 만들어준다. 다시 말하면  Objcet.create메서드가 실행되면 Parent.prototype을 참조하고있는(바라보는) 새로운 객체를 만들어서 Child의 prototype에 할당하는 것이다. 따라서, Child의 prototype은 새로 생성된 객체 공간을 가리키게 된다. 
+        //콘솔에 child의 proto로 Parent가 출력되는데 이는 Parent 생성자 함수를 이야기하는 것이 아니고, Object.create에서 넘겨준 객체를 의미한다. 
+        //따라서, Child의 인스턴스들은 Parent의 prototype을 참조하게되고, 결국, Child의 인스턴스들이 Parent 안에 있는 여러가지 메소드들을 상속받아서 이용할 수 있게 된다
+        // prototype은 어떠한 임의의 공간을 가리킨다. 그래서 이 프로토타입의 공간을 마음대로 만들어도 상관이 없다. 
+
+
+        //심화과정
+        //그런데 Parent 프로토타입에는 constructor가 존재하지 않음.  Object.create()을 사용할 경우, 새로 만들어진 객체에는 constructor가 존재하지 않음. 만약, constructor를 설정해주려면? object.create를 할 때 객체를 하나 더 전달할 수 있는데 이 객체를 프로퍼티 서술자 객체라고 함. 또한, 객체를 던질 때 프로퍼티도 설정할 수 있는데 여기서 말하는 객체의 프로퍼티는 자바스크립트가 내부적으로 사용하는 프로퍼티를 의미함. configureable, enumerable 등을 의미함. 
+        Child.prototype = Object.create(Parent.prototype, {
+            //프로퍼티 서술자 객체
+            //내장 속성을 설정할 수도 있습니다.
+            constructor: {
+                //프로퍼티 변경이 가능한가?
+                configureable: true,
+                //열거 가능한가?
+                enumerable: true,
+                //프로퍼티의 값을 수정할 수 있는가?
+                writiable: true,
+                value: Child
+            }
+        }); 
+
+        const child2 = new Child();//토글을 열어보면 constructor가 생겨남. 따라서, 아까는 canWalk만 있었는데 constructor 프로퍼티를 추가해줌으로써 child2의 생성자가 누구인지 명시적으로 나타낼 수 있음.
+    </script>
+</body>
+</html>
+

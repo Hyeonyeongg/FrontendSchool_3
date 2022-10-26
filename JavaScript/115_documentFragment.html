@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <main>
+
+    </main>
+    <script>
+        const frag = document.createDocumentFragment(); //frag객체가 만들어져서 저장됨. frag도 돔 트리.
+        //const div = document.createElement('div'); //이렇게해도됨
+        let parentEl = document.querySelector('main'); 
+
+        for(let i = 0; i < 10 ; i++) {
+            //let parentEl = document.querySelector('main'); //개선점: 반복문마다 main을 매번 찾음. 반복문 안에 querySelector를 넣으면 찾는 것을 계속 반복함. querySelector는 굉장히 무거운 함수이기 때문에 최대한 적게 호출하는 것도 성능향상이 도움됨. 따라서 밖으로 빼놓는 것이 좋음. 반복문 안에서는 querySelector되도록 사용하지 않기.
+
+            const article = document.createElement('article');
+            article.innerHTML = `
+                <figure>
+                    <img class="figImg"
+                        src="https://file.mk.co.kr/meet/neds/2021/07/image_readtop_2021_654175_16256093474708254.jpg"
+                        alt="">
+                    <figcaption class="figCap">
+                        유재석씨가 수상식에서 환하게 웃고 있다.
+                    </figcaption>
+                </figure>
+            `;
+
+            frag.appendChild(article); //frag라는 DOM트리에 article을 추가해줌. 직접적으로 현재 렌더링되어있는 요소에 추가하는 것이 아니고 메모리상에 존재하는 돔트리에 추가해주는 것. 그리고 나중에 이를 한 번에 main에 추가해줌.
+            
+            //div.appendChild(article);
+            //parentEl.appendChild(article); //개선점: article을 붙일 때마다 화면이 업데이트됨. 처음 한번 돌았을 때 메인에 아티클이 하나 붙고, 두 번 돌면 또 붙고, 세 번 돌면 또 붙음. 이 돔트리에 다른 돔을 추가하는 작업이 반복문을 돌때마다 반복됨. 그럼 돔의 구조(레이아웃)이 바껴야하니까 브라우저가 화면을 렌더링할때마다 reflow현상이 발생하는 것. 따라서 렌더링 성능이 떨어짐. 이를 개선하기위해서 사용할 수 있는것이 DocumentFragment.
+        }
+        //parentEl.appendChild(div); //이렇게해도 동일한지만 main 안에 div가 생김. 
+
+        parentEl.appendChild(frag); 
+        //main 안에 frag는 보이지 않고 바로 <article>이 붙여짐. 반복이 필요할 정도의 작업이라면 frag를 쓰는 것이 좋음. 
+        //만약에 append를 하지 않은 상태에서 frag를 출력해보면 article이 주렁주렁 달려 있음. 이 상태에서 dom에 추가하면 frag는 남아있고, 안에 있는 자식 요소만 돔 노드에 추가됨.frag를 확인해보면 안에 자식들이 다 빠져나가고 frag만 남아있는 모습을 볼 수 있음.  
+        //그렇다면 자식 요소를 돔에 추가하고도 frag 객체 안에 article이 사라지지 않고 남아있게 하려면? 그래서 이 article을 다른 곳에 또 붙이거나, frag를 여러번 재사용하고 싶다면? 아래와 같이 작성하면 됨. 
+
+        //parentEl.appendChild(frag.cloneNode(true)); 
+        //cloneNode는 메서드를 호출한 노드를 복제해서 반환함. 인자로 true나 false를 넣을 수 있음. true는 노드안에 있는 자식까지 전부 복사해서 반환하고, false는 frag 요소만 복제해서 전달함. 해당 코드를 실행하면 main에 article이 붙게되고 frag를 확인해보면 article이 사라지지 않고 남아있는 것을 볼 수 있음. 만약, false로 전달하면 main안에 복제된 Fragment만 전달되기 때문에 main 안에 아무것도 없음. 
+        
+        //frag 객체는 사용 후에도 메모리 상에서 사라지지 않습니다.
+        //frag.appendChild(document.createElement('div')); 
+    </script>
+</body>
+</html>

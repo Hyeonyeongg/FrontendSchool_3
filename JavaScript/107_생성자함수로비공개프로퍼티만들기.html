@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        //사용자 정의 타입(생성자 함수)에서 비공개 프로퍼티 만들기
+        //모듈  + 사용자 정의 혼합패턴
+        function Person() { //일반 함수
+            let age = 30; //비공개 프로퍼티로 만들어보자. 여기가 클로저 공간
+
+            function innerPerson() {} //생성자 함수
+
+            innerPerson.prototype.getAge = function() {
+                return age;
+            }
+
+            return innerPerson; //return을 하면 Person함수는 메모리에서 해제되기 때문에 let age에 접근하는 방법이 사라짐.  
+        }
+
+        const PersonFunc = Person(); //person에 innerPerson이 저장되고 Person 함수코드블록은 사라짐.
+        const person = new PersonFunc(); //person이라는 인스턴스가 만들어짐.
+        console.log(person.getAge()) //30
+        console.log(person.age) //undefined. 이렇게는 접근불가
+
+
+        //IIFE 패턴 함수는 즉시 실행함수로, 함수를 선언과 동시에 바로 실행시켜줄 수 있음. IIFE패턴 함수는 익명 함수임.
+        // (function(){
+        //     console.log('IIFE');
+        // })();
+
+        //IIFE를 이용한 모듈 사용자 정의 혼합패턴
+        //IIFE 패턴으로 개선하기. 함수를 실행한 결과값이 바로 NewPerson으로 들어감. 코드가 실행되는 순간 함수가 실행되고 innerPerson을 밖으로 빼서 NewPerson에 집어넣음. 그럼 25번째 줄의 const PersonFunc = Person();이 과정을 생략할 수 있는 것.
+        const NewPerson = (
+            function () {
+                let age = 30;
+
+                function innerPerson() {}
+
+                innerPerson.prototype.getAge = function () {
+                    return age;
+                }
+
+                return innerPerson
+            }
+        )();
+
+        const personWithSecret = new NewPerson(); 
+        console.log(personWithSecret.getAge()); //부모 유전자에 getAge가 있음.
+        console.log(personWithSecret.age); //undefined
+    </script>
+</body>
+</html>

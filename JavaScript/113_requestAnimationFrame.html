@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .target {
+            width: 50px;
+            height: 50px;
+            background-color: pink;
+            /* transition: .2s; 여기서는 필요 없음. 애니메이션프레임이 워낙 부드러워서 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="target"></div>
+    
+    <script>
+        const target = document.querySelector('.target');
+        let pos = 0;
+        let keys = {}; //사용자가 누른 키의 상태를 저장하는 객체. ArrowLeft: true; 이런식으로 저장됨.  
+        
+        function move(event) {
+            keys[event.key] = true; //keys.event.key로 하면 안됨. 겍체의 값에 접근할 때 문자열로 접근할 경우 점 연산자로는 불가능함! event.key의 결과로 반환되는 것이 사용자가 누른 키의 문자열 정보값이기 때문. keys.'ArrowLeft' 불가!
+        }
+
+        function stop(event) {
+            keys[event.key] = false; //키보드를 눌렀다가 떼면 ArrowLeft: true 였던 것이 ArrowLeft: fasle로 바뀜.
+        }
+
+        document.addEventListener('keydown', move);
+        document.addEventListener('keyup', stop);
+
+        function play() {
+            //console.log('play!');
+            if(keys.ArrowRight) { 
+                pos += 2;
+                target.style.transform = `translateX(${pos}px)`;
+            }
+
+            if(keys.ArrowLeft) {
+                pos -= 2;
+                target.style.transform = `translateX(${pos}px)`;
+            }
+            window.requestAnimationFrame(play); //계속 play함수를 호출해서 무한반복됨. 하지만 무한반복하게 놔둬도 문제없음. 다른탭으로 이동하면 자동으로 멈춤. 재귀함수를 통해서 함수를 계속 실행시킬 수 있다는 것은 이 함수가 어떠한 대상의 정보를 계속적으로 체크할 수 있다는 의미. 즉, 사용자가 이벤트를 발생시켰을 때 대상을 보고있다가 대상에 변화가 생기면 이 play함수 안에서 대응을 할 수 있음. 계속 실행되고 있으니까. 여기서는 keys 값을 계속해서 보고 있음.
+        }
+
+        window.requestAnimationFrame(play); //play를 호출함.
+    </script>
+</body>
+</html>
+
