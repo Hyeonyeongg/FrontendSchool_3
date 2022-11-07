@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>jQuery</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <div id="data"></div>
+        <script>
+            $.ajax({
+                url: "http://test.api.weniv.co.kr/mall",
+                async: true, //false로 변경해보세요! (하지만, 거의 true로 사용)
+                // 기본이 true(비동기처리), false를 할 경우 동기처리
+                // false를 하게 되면 해당 코드를 다 실행한 다음(다 끝나야지만) 뒤에 코드를 실행합니다.
+                // true이면 통신이 다 완료되지 않아도 일단 뒤에 코드를 실행합니다.
+                success: function (result) {
+                    //$("#data").text(result);
+                    for(const i of result) {
+                        console.log(i);
+                    }
+                },
+            });
+            console.log("hello") //async가 ture일 경우 hello가 먼저 찍히고, 그 다음에 데이터가 나옴. 비동기로인해 $.ajax가 먼저 있지만 hello가 먼저 찍힘. 만약, async를 false로 바꾸면 동기적으로 처리되어 데이터가 찍히고, hello가 찍힘.
+        </script>
+    </body>
+</html>

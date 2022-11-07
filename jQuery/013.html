@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>jQuery</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            .box {
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="text">1</p>
+        <div id="divOne" class="box">2</div>
+        <p class="textTwo">3</p>
+        <h1>4</h1>
+        <script>
+            $('#text').text('hello world'); //원래는 innerText로 작성해야 할 것을 jQuery를 사용하면 더 빠르게 작성 가능
+            $('#divOne')
+                .fadeIn(1000)
+                .fadeOut(1000)
+                .fadeIn(1000)
+                .fadeOut(1000)
+                .fadeIn(1000);
+
+            //회사 컨벤션에 따라 가면 되는데 2개 다 사용하는 경우는 없음.
+            //jquery로 가져온 것임을 명시하기 위해 앞에 $를 붙임. (변수명에 $표시 안해도됨. 특별한 기능이 있는 것은 아님.)
+            // const $contDesc = $('#text'); 
+            // $contDesc.text('hello')
+
+            //노드임을 명시하기 위해 앞에 $를 붙임.
+            // const $변수 = document.querySelector('#text') 
+            // $변수.innerText = 'hello'
+
+            //문서들(html태그들)이 다 준비되었을 때 실행해라. 
+            $(function(){
+                $("div").click(function(){
+                    // $contDesc.hide()
+                    $(this).hide();
+                })
+            })
+        </script>
+    </body>
+</html>

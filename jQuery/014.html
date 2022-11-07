@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <button id="btn_data">클릭해주세요!</button>
+    <div id="data"></div>
+    <script>
+        // $("#btn_data").click(function () {
+        //     $("#data").load("http://test.api.weniv.co.kr/mall");
+        // });
+
+        // $('#btn_data').click(function () {
+        //     $("#data").load('https://raw.githubusercontent.com/paullabkorea/10000hour/main/index.html h1'); //html파일에서 h1만 가져옴. (load는 잘 사용하지 않음.)
+        // });
+        
+        //fetch말고도 3가지의 대안이 있음. fetch, axios, jquery의 ajax. 요즘에는 ajax를 거의 사용 안함. 급할 때는 사용하기도 함. ajax가 생산성이 뛰어나다고 함. 
+        $('#btn_data').click(function () {
+            $("#data").load('https://raw.githubusercontent.com/paullabkorea/10000hour/main/index.html h1', 
+            function (responseText, statusText, xhr) {
+                console.log(responseText); //html파일이 출력됨
+                console.log(statusText); //성공여부
+                console.log(xhr); //다양한 정보가 담겨 있는 오브젝트
+                console.log(xhr.status); //status번호
+            }
+            );
+        });
+    </script>
+</body>
+</html>
