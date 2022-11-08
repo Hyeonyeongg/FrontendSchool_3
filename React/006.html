@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>리액트 1분만에 추가해보기!</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script type="text/babel">
+            const json = [1, 2, 3, 4, 5, 6, 7, 8, 9] //json데이터가 있다고 가정.
+            function ImageSlide() { //함수 이름 앞에는 대문자로 해주기!
+                return <img src="jeju.jpg" width="300px"/>;
+            }
+
+            function Title() {
+                return <h1>jeju의 명소 weniv</h1>;
+            }
+
+            function Info() {
+                return <p>100km 거리</p>;
+            }
+
+            function Price() {
+                return <p>100000</p>;
+            }
+
+            const app = ( //중괄호로 감싸면 자바스크립트 문법으로 인식함. 이런식으로 전체를 array로 반환해주면 됨.
+                <div>
+                    {[<ImageSlide />,
+                    <Title />,
+                    <Info />,
+                    <Price />]}
+                </div>
+            );
+
+            const domContainer = document.querySelector("#root");
+            ReactDOM.render(app, domContainer);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>리액트 1분만에 추가해보기!</title>
+    </head>
+    <body>
+        <div id="root"></div> <!--기본적인 형태가 자바스크립트로 root에 데이터를 넣는것-->
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script type="text/babel">
+
+            function Hello() { //함수로 만들기
+                return <h1>hello world 1</h1>;
+            }
+
+            const Hello2 = <h2>hello world 2</h2>; //변수로 만들기
+
+            //<Hello/> 자리에 <h1>hello world 1</h1>이게 들어가게 됨. 이것을 할 수 있는게 jsx문법.
+            
+            //함수 형태나 클래스 형태만 <Hello/> 이렇게 사용가능. 변수로 선언한 Hello2는 <Hello2/> 형태로 사용 불가.
+            //변수로 선언했을 때는 중괄호로 감싸주면 됨. {}안에는 js코드가 가능함. 따라서 {Hello()}도 가능. 하지만, hello()의 경우는 작동하지 않음. (js코드는 반드시 {}로 감싸줘야함.)
+            const app = (
+                <div>
+                    <Hello/>    
+                    <Hello/>    
+                    <Hello/>
+                    {Hello2}
+                    {Hello2}
+                    {Hello2}
+                    {Hello()}
+                </div>
+            )
+
+            //원래는 이렇게 했었음.
+            // const app = `
+            //     <div>
+            //         <Hello/>    
+            //     </div>
+            // `
+
+            const domContainer = document.querySelector("#root");
+            ReactDOM.render(app, domContainer);
+        </script>
+    </body>
+</html>

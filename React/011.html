@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>리액트 1분만에 추가해보기!</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script type="text/babel">
+            function 자기소개(props) { //props를 많이 사용하는데 전달되는 값들을 다 모아줌. 객체처럼 동작함. 물론 다른 이름도 사용 가능.  스프레드 문법을 이용해서 구조분해할당 해도 됨. 
+                return (
+                    <div>
+                        <p>제 이름은 {props.name}</p>
+                        <p>제 나이는 {props.age}</p>
+                        <p>제 통장은 {props.money}</p>
+                        <p>저희 집은 {props.house}</p>
+                        <p>커피는 {props.coffee}</p>
+                    </div>
+                );
+            }
+
+            function 자기소개2(현영) { //prop말고 다른 이름도 사용가능!
+                return (
+                    <div>
+                        <p>제 이름은 {현영.name}</p>
+                        <p>제 나이는 {현영.age}</p>
+                        <p>제 통장은 {현영.money}</p>
+                        <p>저희 집은 {현영.house}</p>
+                        <p>커피는 {현영.coffee}</p>
+                    </div>
+                );
+            }
+
+            function 자기소개3({ name, age, money, house, coffee }) { //객체의 구조 분해할당(js문법임) 
+                return (
+                    <div>
+                        <p>제 이름은 {name}</p>
+                        <p>제 나이는 {age}</p>
+                        <p>제 통장은 {money}</p>
+                        <p>저희 집은 {house}</p>
+                        <p>커피는 {coffee}</p>
+                    </div>
+                );
+            }
+
+            //app은 통상적으로 소문자로 적음. 숫자를 전달하고 싶으면 중괄호로 감싸주면 됨. 두번째처럼 {}로 감싸준 후, 객체를 통으로 전달해줄 수도 있음.
+            const app = (
+                <main>
+                    <자기소개
+                        name="hyeonyeong"
+                        age="10"
+                        money="1000"
+                        house="null"
+                        coffee="full"
+                    />
+                    {자기소개({
+                        name: "hyeonyeong",
+                        age: "10",
+                        money: "1000",
+                        house: "null",
+                        coffee: "full",
+                    })}
+                    <자기소개
+                        name="hyeonyeong"
+                        age="10"
+                        money={1000}
+                        house="null"
+                        coffee="full"
+                    />
+                    <자기소개2
+                        name="hyeonyeong"
+                        age="10"
+                        money="1000"
+                        house="null"
+                        coffee="full"
+                    />
+                    <자기소개3
+                        name="hyeonyeong"
+                        age="100"
+                        money="10000"
+                        house="null"
+                        coffee="fulll"
+                    />
+                </main>
+            );
+
+            const domContainer = document.querySelector("#root");
+            ReactDOM.render(app, domContainer);
+        </script>
+    </body>
+</html>

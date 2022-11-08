@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>리액트 1분만에 추가해보기!</title>
+    </head>
+    <body>
+        <h1>내 html에 리액트 1분만에 추가해보기!</h1>
+        <p>단 1분만에 설치없이 리액트를 추가할 수 있다구요?</p>
+        <div id="root"></div>
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script type="text/babel">
+            // react 컴포넌트 정의하기
+            const el = React.createElement;
+
+            class HelloButton extends React.Component { //옛날에는 펑션으로 안하고 클래스로 사용했었음. 요즘에는 함수형 컴포넌트로 만드는 방식을 사용함. (복잡하고, 클래스의 생애주기가 복잡도를 올림. funcition의 훅이 나오면서부터 함수형 컴포넌트를 클래스 컴포넌트처럼 사용할 수 있게됨. 따라서 더 쉽고 간결한 함수형 컴포넌트를 사용하게 된 것임.)
+                constructor(props) {
+                    super(props);
+                    this.state = { liked: false };
+                }
+
+                render() {
+                    if (this.state.liked) {
+                        return "Hello World!";
+                    }
+
+                    return (
+                        <button onClick={() => this.setState({ liked: true })}>
+                            Hello
+                        </button>
+                    );
+                }
+            }
+
+            // DOM에 리액트 컴포넌트 랜더링하기
+            const domContainer = document.querySelector("#root");
+            ReactDOM.render(el(HelloButton), domContainer); //HelloButton을 el로 감싸주면 밖으로 나올 때 리턴값으로 나오게됨. 
+        </script>
+    </body>
+</html>

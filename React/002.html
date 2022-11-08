@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>리액트 1분만에 추가해보기!</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script type="text/babel">
+            function HelloButton(props) { //함수 형태로 컴포넌트를 만들 수 있음. 조립식으로 만들어서 합채해서 넣는다. 
+                return (
+                    <button onClick={() => console.log("실행")}>Hello</button>
+                );
+            }
+
+            function Title() {
+                return <h1>내 html에 리액트 1분만에 추가해보기!</h1>;
+            }
+
+            function Contents() {
+                return <p>단 1분만에 설치없이 리액트를 추가할 수 있다구요?</p>;
+            }
+
+            //함수로 만든것을 태그로 사용한다. 기존의 태그와 혼합해서 사용할 수 있다. 그리고 반드시 상위에 감싸주는 애가 있어야함. 
+            const app = (
+                <div>
+                    <Title /> 
+                    <Contents />
+                    <Contents />
+                    <Contents />
+                    <Contents />
+                    <HelloButton />
+                    <HelloButton />
+                    <HelloButton />
+                    <HelloButton />
+                    <HelloButton />
+                    <HelloButton />
+                </div>
+            );
+
+            // DOM에 리액트 컴포넌트 랜더링하기
+            const domContainer = document.querySelector("#root");
+            ReactDOM.render(app, domContainer); //app코드가 jsx문법으로 되어있는데 이 jsx문법으로 되어있는 것을 전부다 ReactDOM이 리턴값으로 바꿔서 domContainer에 쏴줌. 
+        </script>
+    </body>
+</html>

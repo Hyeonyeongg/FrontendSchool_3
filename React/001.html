@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>리액트 1분만에 추가해보기!</title>
+    </head>
+    <body> 
+        <div id="root"></div>
+        <script
+            src="https://unpkg.com/react@17/umd/react.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script type="text/babel">
+            function HelloButton(props) {  //함수명을 대문자로 하기로 약속되어 있음. 함수로 만들어서 찍어내겠다.
+                return (
+                    <button onClick={() => console.log("실행")}>Hello</button> //원래 태그를 리턴해서 주려면 ``로 감싸줘야하는데 태그로 바로 줄 수 있음.
+                );
+            }
+
+            const app = (
+                <div>
+                    <HelloButton />
+                    <HelloButton />
+                    <HelloButton />
+                    <HelloButton />
+                    <HelloButton />
+                </div>
+            );
+
+            // DOM에 리액트 컴포넌트 랜더링하기
+            const domContainer = document.querySelector("#root");
+            ReactDOM.render(app, domContainer);
+        </script>
+    </body>
+</html>
