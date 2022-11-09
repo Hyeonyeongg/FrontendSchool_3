@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">test</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+        integrity="sha512-kp7YHLxuJDJcOzStgd6vtpxr4ZU9kjn77e6dBsivSz+pUuAuMlE2UTdKB7jjsWT84qbS8kdCWHPETnP/ctrFsA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script data-plugins="transform-es2015-modules-umd" type="text/babel" src="./Main.js"></script>
+    <script data-plugins="transform-es2015-modules-umd" type="text/babel">
+        import Main from "./Main.js"
+
+        Main()
+    </script>
+    <!-- jsx문법을 사용하려면 type="text/babel"가 되어있어야함. 그런데 바벨에서는 import문법(모듈)을 사용할 수 없음. 따라서 data-plugins="transform-es2015-modules-umd"를 포함해서 사용해야함. 노드환경에서는 알아서 해줌. 몰라도됨. html에서 모듈화해서 리액트로 뽑을 수 있는 방법.  -->
+</body>
+
+</html>
