@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>제코베 스토어 관리자 페이지 CRUD</title>
+    </head>
+    <body>
+        <label for="inp-name">상품이름</label>
+        <input id="inp-name" type="text" />
+
+        <br />
+        <label for="inp-price">제품가격</label>
+        <input id="inp-price" type="number" />
+
+        <br />
+        <label for="inp-stock">재고</label>
+        <input id="inp-stock" type="number" />
+
+        <br />
+        <label for="inp-date">출시날짜</label>
+        <input id="inp-date" type="date" />
+
+        <br />
+        <button id="btn-load">상품불러오기</button>
+        <button type="button" id="btn-register">상품등록하기</button>
+        
+
+        <script>
+            // 상품 만들기
+            function createProduct(item) {
+                const $container = document.createElement("section");
+                const $productName = document.createElement("h2");
+                const $price = document.createElement("p");
+                const $btnDelete = document.createElement("button");
+                const $btnUpdate = document.createElement("button");
+
+                $productName.innerText = item.productName;
+                $price.innerText = item.price;
+                $btnDelete.innerText = "삭제하기";
+                $btnUpdate.innerText = "수정하기";
+
+                $container.appendChild($productName);
+                $container.appendChild($price);
+                $container.appendChild($btnDelete);
+                $container.appendChild($btnUpdate);
+
+                document.body.appendChild($container);
+
+                $btnDelete.addEventListener("click", () => deleteProduct(item.id, $container)); //deleteItem(1, section)
+                $btnUpdate.addEventListener("click", () => updateProduct(item, $container)); //updateItem(객체, section)
+            };
+
+            // Read 
+            const btnLoad = document.querySelector("#btn-load");
+            btnLoad.addEventListener("click", () => {
+                // console.log("눌렀다.");
+                fetch("http://localhost:3001/product", {
+                    method: "GET",
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        for (item of data) {
+                            createProduct(item);
+                        }
+                    });
+            });
+
+            //create
+            const btnRegister = document.querySelector("#btn-register");
+            btnRegister.addEventListener("click", () => {
+                // console.log("눌렀다.");
+
+                const productInfo = {
+                    productName: document.querySelector("#inp-name").value,
+                    price: document.querySelector("#inp-price").value,
+                    stockCount: document.querySelector("#inp-stock").value,
+                    viewCount: 0,
+                    pubDate: document.querySelector("#inp-date").value,
+                    modDate: document.querySelector("#inp-date").value,
+                };
+
+                fetch("http://localhost:3001/product", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(productInfo),
+                })
+                    .then((response) => response.json()) //body에 id포함 내가 생성한 데이터 하나가 들어있음. (id의 경우 지정해주지 않았지만 자동으로 부여됨.)
+                    // .then((data) => console.log(data))
+                    .then((item) => { //데이터가 하나만 들어오기 때문에 for문을 돌릴 필요가 없음. 
+                            createProduct(item);
+                    });
+            });
+
+            //update
+            function updateProduct(item, container) { //해당 섹션을 만들 때 사용한 객체와, 해당 섹션을 받아옴.
+                const h2 = container.querySelector("h2");
+                const p = container.querySelector("p");
+
+                if(!container.querySelector("input")) { //최초 수정버튼을 눌렀을 경우
+                    const productName = document.createElement("input");
+                    const price = document.createElement("input");
+
+                    productName.type ="text";
+                    price.type = "number";
+
+                    productName.value = h2.innerText;
+                    price.value = p.innerText;
+
+                    h2.style.display = "none";
+                    p.style.display = "none";
+
+                    container.prepend(price); //price를 container 내부의 시작부분에 삽입
+                    container.prepend(productName);
+                } else { //수정 버튼을 눌러서 인풋 창에 값을 변경하고 다시 수정을 누를 경우
+                    const inputName = container.querySelector("input[type=text]");
+                    const inputPrice = container.querySelector("input[type=number]");
+                    const updateInfo = {
+                        productName: inputName.value,
+                        price: +inputPrice.value, //숫자로 형변환
+                    }
+
+                    fetch(`http://localhost:3001/product/${item.id}`, {
+                        method: "PATCH",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(updateInfo),
+                    })
+                        .then((response) => response.json())
+                        .then((item) => { //우리가 전달한 값으로 수정된 객체가 들어옴.
+                            inputName.remove();
+                            inputPrice.remove();
+
+                            h2.style.display = "block";
+                            p.style.display = "block";
+
+                            h2.textContent = item.productName;
+                            p.textContent = item.price;
+                        })
+                }
+            }
+
+            //delete
+            function deleteProduct(id, container) {
+                fetch(`http://localhost:3001/product/${id}`, {
+                        method: "DELETE",
+                }).then(()=> { //reponse.json()으로 출력해보면 아무것도 없음. 즉, DELETE시에 body에는 아무것도 들어오지 않음. 
+                    container.remove();
+                });     
+            };
+        </script>
+    </body>
+</html>
