@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-`
+`;
 
 const ContainerMain = styled.main`
   display: flex;
@@ -52,13 +52,13 @@ const ItemProductList = styled.li`
   display: flex;
   flex-direction: column;
   cursor: pointer;
-`
+`;
 
 const ImgProduct = styled.img`
   width: 380px;
   height: 380px;
   border-radius: 10px;
-`
+`;
 
 const IconShoppingCart = styled.a`
   background: #000 url(${shoppingCart}) no-repeat center / 40px 40px;
@@ -67,7 +67,7 @@ const IconShoppingCart = styled.a`
   border-radius: 50%;
   position: sticky;
   top: 60px;
-`
+`;
 
 const TitleProduct = styled.p`
   font-size: 18px;
