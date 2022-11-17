@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Link, useLocation, useParams, Outlet } from "react-router-dom";
 
-//문제
 // 문제
 // /
 // /a
@@ -38,12 +37,12 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/a" element={<A/>}/>
         <Route path="/b" element={<B/>}/>
-        {/* <Route path="/c" element={<C/>}/>
-        <Route path="/c/:id" element={<CDetail/>}/> */}
-        <Route path="/c/*" element={<Outlet/>}>
+        <Route path="/c" element={<C/>}/>
+        <Route path="/c/:id" element={<CDetail/>}/>
+        {/* <Route path="/c/*" element={<Outlet/>}>
           <Route path="" element={<C/>}/>
           <Route path=":id" element={<CDetail/>}/>
-        </Route>
+        </Route> */}
       </Routes>
     </BrowserRouter>
   );
