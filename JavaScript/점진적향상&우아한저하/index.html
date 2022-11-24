@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .layout-grid {
+            display: grid;
+        }
+
+        .layout-flex {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="container"></div>
+    <script>
+        //점진적 향상 기법
+        const container = document.querySelector('.container');
+        //style 프로퍼티는 해당요소가 사용할 수 있는 모든 스타일 속성을 포함하는 객체임. container.style은 div요소가 사용할 수 있는 모든 style속성을 갖고 있음. gird를 쓸 수 없는애는 flex를 써줌. (style을 했을 때 grid가 없다는 것은 grid를 사용할 수 없다는 것)
+        if(container.style.grid !== undefined) {
+            container.classList.add('layout-grid')
+        } else {
+            container.classList.add('layout-flex')
+        }
+    </script>
+</body>
+</html>

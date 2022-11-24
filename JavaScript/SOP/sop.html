@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>hello sop!</h1>
+    <!-- iframe으로 다른 html을 불러올 수 있음. 각각의 iframe에 접근해서 문서상에 변화를 줘보자-->
+    <iframe src="test.html" frameborder="0" class="test"></iframe>
+    <iframe class="youtube" width="1083" height="609" src="https://www.youtube.com/embed/4TWR90KJl84" title="aespa 에스파 'Next Level' MV"
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    
+    <script>
+        let x = document.querySelector('.test');
+        let y = document.querySelector('.youtube');
+
+        //로드 이벤트는 html document가 모두 로딩이되었을 때. 이미지, css, js등등 모든 리소스가 완료되었을 때가 laod이벤트가 트리거 됨. (돔트리가 생성되었을 때는 DOMcontentLoaded가 트리거 됨) 
+        //iframe에 접근하려면 반드시 이벤트리스너를 붙여서 iframe 로드가 다 끝날때까지 기다려야함. 로딩이 다 되지도 않았는데 접근하면 안됨!!
+        // contentDocument : 만약 iframe 과 iframe's parent document 가 같은 origin을 가진다면 iframe의 document 객체를 반환합니다. 조작해도돼! 이런 느낌?(iframe과 test.html 도큐먼트가 이 html을 참조하고 있음.)
+        x.addEventListener('load', ()=>{
+            console.log('same origin : ', x.contentDocument); //test.html이 x.contentDocument에 들어감.
+            x.contentDocument.body.style.backgroundColor = "red";
+        } )
+
+        y.addEventListener('load', ()=>{
+            console.log('same origin : ', y.contentDocument);
+            y.contentDocument.body.style.backgroundColor = "red";
+        } )
+
+        //test.html의 배경색이 빨간색으로 바뀜. 그런데 유튜브 iframe은 애매함. 즉, y.contentDocument가 null임. 유튜브 아이프레임은 sop.html과 호스트가주소가 다름. sop.html과 동일한 출처가 아니기 때문에 sop.html에서 접근이 가능한 것은 동일한 출처를 가진 test.html. 
+        //출처가 다른 리소스에는 접근해서 상호작용을 할 수 없다. 같은 출처에서만 상호작용이 가능하다! 가져오는 것은 얼마든지 가져올 수 있음. 
+    </script>
+</body>
+</html>
+

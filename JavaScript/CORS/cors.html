@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        async function loadHeroes() {
+            const response = await fetch('https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json');
+            
+            if(response.ok) {
+                console.log(await response.json());//응답 본문을 읽으면서 객체 형태로 파싱
+            } else {
+                alert('통신 에러!' + response.status)
+            }
+        }
+        // 개발자 도구 네트워크 탭에서 응답헤더를 보면 access-control-allow-origin: *가 있음. 서버가 데이터만 보내주는게 아니라 통신관련 데이터도 응답헤더에 담아서 보내줌. access-control-allow-origin는 서버가 어떤 클라이언트든 이 데이터에 접근하는 것이 가능하다는 것을 의미함. *은 모든 도메인에서 접근할 수 있음을 의미함. 물론, 해당하는 도메인에서만 접근할 수 있도록 할수도 있음.
+        //cors에 문제가 생기면 우리가 할 수 있는 것은 없음. 권한은 서버에서 부여하는 것이기 때문에 서버쪽이랑 해결해야 함.
+        loadHeroes();
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d1250dd4001c049077d9f325ac0ee38a"></script>
+</head>
+<body>
+    <!-- 카카오가 호스트를 파악하여 카카오맵에서 허락한키를 통해서 이 호스트에서 데이터를 불러오는건데 만약 호스트가 바뀌면? 라이브서버의 포트주소를 5502로 바꿔서 다시 라이브서버를 열어보면 지도가 안뜸! -->
+    <!-- Failed to load resource: the server responded with a status of 401 (Unauthorized) 에러가 발생! 401에러는 해당 리소스에 유효한 인증 자격 증명이 없기 때문에 발생하는 에러. 서버에서 등록한 클라이언트 정보와 요청한 클라이언트 정보가 일치하지 않을 때 401에러가 발생함. scirpt로 마냥 리소르를 불러올 수 있는 것은 아님! 약속된 키를 전송해야 이사람이 맞구나 하고 이 호스트주소로 서비스할 수 있도록 보내줘야지하고 응답헤더를 보내줌. -->
+    <div id="map" style="width:500px;height:400px;"></div>
+    <script>
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+            level: 3 //지도의 레벨(확대, 축소 정도)
+        };
+
+        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    </script>
+</body>
+</html>
