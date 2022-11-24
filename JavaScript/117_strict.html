@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        // 'use strict'; //엄격모드
+
+        //1. 선언하지 않은 변수에 값을 할당할 수 없습니다.
+        // str = "hello"; //일반모드에서는 var, let, const를 사용하지 않고 선언할 수 있음. 키워드 없이 선언하면 전역변수 취급됨. (var로 선언한 것과 같지는 않음. 함수 안에서 키워드를 빼고 선언하면 변수의 생존범위는 전역이 됨. 함수가 종료되어도 str변수에 접근할 수 있게됨). 하지만 엄격모드에서는 변수 선언이라고 보지 않음.
+        // function test() {
+        //     str = 'hi';
+        // }
+
+        //2. 읽기 전용 객체에 값을 할당하면 에러가 발생합니다.
+        //var라는 키워드를 쓰면 일부 예약어는 변수명으로 사용할 수 있음. (let은 안됨)
+        //하지만 일반모드에서도 자바스크립트는 아래의 것들을 에러로 인식하고 무시를함. 에러는 안나지만 조용히 무시함. (이상한 앤가봐...) 작동하는 것처럼 보이지만 작동안됨 ^^. 이러한 것들은 조용한 에러라라고 부름. 조용한 에러처리를 해버림
+        // var undefined = 'undefined';
+        // var Infinity = 100;
+        // Math.PI = 0; //값 할당 가능.
+
+
+        //3. 지울수 없는 값을 지우려고 하면 에러가 발생합니다
+        const employee = {
+            firstname : 'Jhon',
+            lastname: 'Doe'
+        }
+
+        console.log(employee.firstname)
+        delete employee.firstname; //객체의 속성을 제거함. (사용자 정의 객체의 프로퍼티는 얼마든지 지워도됨. native로 구현되어있는 객체의 프로퍼티는 delete로 삭제할 수 없음.)
+        console.log(employee.firstname) 
+        
+        delete Object.prototype; //일반모드에서는 아무런 에러가 뜨지 않음.
+
+        //4. 함수 파라미터에 중복된 이름을 사용할 수 없습니다. (함수 안에 똑같은 변수를 두 번선언한 것과 같음.)
+        function myFunc(a, a, b) {
+            console.log(a + a + b);
+        }
+        myFunc(1, 2, 3); //a라는 인자에 1이라는 값이 할당됐다가 a가 또 나와서 2라는 값이 할당돼서 a를 2로 바꿈. 그래서 2+2+3이 돼서 7이 됨.
+
+    </script>
+</body>
+</html>
