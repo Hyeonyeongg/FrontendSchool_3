@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        article {
+            display: inline-block;
+            border: 3px solid black;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .viewer {
+            font-size: 24px;
+            color: green;
+            margin: 50px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 이렇게하면 TDD를 사용하기 어렵다. 는 예시 -->
+    <article>
+        <h2 class="viewer"></h2>
+        <input type="text" class="inp-txt">
+        <!-- html언어 안에 자바스크립트 코드(push)가 들어가있음. 서로 다른 언어가 섞여있는 것이 첫번째 문제. 언어가 섞여있으면 테스트가 불가능. js만가지고 테스트를해야하는데 어디에 push함수가 붙는건지 js만 가지고는 알 수 없음. -->
+        <!-- 문제1: 서로 다른 언어가 섞여있다. -->
+        <button class="btn-push" onclick="push()">적용</button>
+    </article>
+
+    <script>
+        //문제2: 전역 변수를 사용하고 있다. 코드 충돌 가능성, 메모리에 좋지 않음. 안티패턴(이렇게 하면 안되는 코드).
+        // 유닛테스트를 할 수 있는 것은 오직 함수. 아래의 코드는 테스트 할 수 없음.
+        let txt = "Hello Lions!";
+        const viewer = document.querySelector(".viewer");
+        viewer.textContent = txt;
+
+
+        //문제3: 재사용성이 떨어짐.
+        function push() {
+            const inpTxt = document.querySelector('.inp-txt'); //함수는 inp-txt라는 요소가 있을 때만 사용가능. 어떤 요소에 있는 값이건 찾아와서 만들 수 있으면 push함수는 범용성이 높아짐. 지금은 .inp-txt에 한정되어 있음.
+            viewer.textContent = inpTxt.value;
+        }
+
+        // 테스트가 가능하려면?
+        /**
+         * 1. JS 코드가 UI에서 완전히 분리 되어야 합니다.
+         * 2. 자바스크립트를 JS파일로 분리합니다.
+         * 3. 모든 기능은 함수로 구현합니다.
+         * */
+    </script>
+</body>
+
+</html>
