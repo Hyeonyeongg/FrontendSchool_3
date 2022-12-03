@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label {
+            display: block;
+            margin-top: 20px;
+        }
+
+        input:invalid {
+            border: 3px solid red;
+        }
+
+    </style>
+</head>
+<body>
+    <form action="">
+        <label for="">사과를 입력하세요</label>
+        <!-- pattern에 우리가 원하는 텍스트를 넣어서 값을 강제할 수 있음. 오직 페턴에 적혀있는 사과만 가능. -->
+        <input type="text" pattern="사과">
+
+        <!-- 앞에 있는 텍스트 혹은 뒤에 있는 텍스트 사용 가능 -->
+        <label for="">사과 혹은 배 중 하나를 입력하세요</label>
+        <input type="text" pattern="사과|배">
+
+        <!-- .은 모든 숫자와 문자를 의미합니다. -->
+        <label for="">세글자만 입력할 수 있습니다.</label>
+        <input type="text" pattern="...">
+
+        <!-- []은 선택할 수 있는 문자의 종류를 지정할 수 있습니다. -->
+        <label for="">첫번째 문자는 사, 과, 배 두번째 문자는 1, 2, 3만 입력할 수 있습니다.</label>
+        <input type="text" pattern="[사과배][123]">
+
+        <!-- [-]은 선택할 수 있는 문자의 범위를 지정할 수 있다. 힣은 한글이 유니코드에 등록될 때는 세 부분으로 나눠져서 등록됨. 첫 번째 소리, 가운데 소리, 끝 소리로 나누어짐. ㅎ , ㅣ , ㅎ 각각의 부분의 마지막 문자이기 때문에 힣을 넣으면 마지막 문자가 되는 것. -->
+        <label for="">한글만 입력이 가능해야합니다.</label>
+        <input type="text" pattern="[ㄱ-ㅎ가-힣]">
+
+        <!-- *은 글자의 수를 제한하지 않습니다. -->
+        <label for="">한글과 숫자만 글자 수 제한없이 입력이 가능해야합니다.</label>
+        <input type="text" pattern="[ㄱ-ㅎ ㅏ-ㅣ 가-힣 0-9]*">
+
+        <!-- {}은 글자의 수를 제한할 수 있습니다. -->
+        <label for="">한글 세글자만 가능합니다.</label>
+        <!-- <input type="text" pattern="[ㄱ-ㅎㅏ-ㅣ가-힣][ㄱ-ㅎㅏ-ㅣ가-힣][ㄱ-ㅎㅏ-ㅣ가-힣]"> -->
+        <input type="text" pattern="[ㄱ-ㅎㅏ-ㅣ가-힣]{3}">
+
+
+        <!-- 주민등록번호를 입력하세요 -->
+        <label for="">주민등록번호를 입력하세요.</label>
+        <!-- text로 해도 패턴으로 숫자만 받을 수 있게 할 수 있음. 이스케이프 처리를 안하면 -은 문자의 범위를 지정하는 의미로 사용됨. 패턴을 쓸 때는 text, email, url, tel만 가능. number은 패턴처리가 되지 않음! -->
+        <input type="text" pattern="[0-9]{6}[\-][0-9]{7}">
+
+
+        <label for="">이메일을 입력하세요.</label>
+        <!-- *는 0~N +는 1~N -->
+        <input type="email" pattern="[a-zA-Z0-9]*@[a-zA-Z0-9]*\.[a-zA-Z]*">
+
+        <label for="">전화번호를 입력하세요.</label>
+        <!-- 대괄호 안에서 - 는 이스케이프 처리해야하는데 대괄호가 아닐 때는 이스케이프 처리 안해줘도됨. -->
+        <input type="tel" pattern="(010|016|011)-[0-9]{3,4}-[0-9]{4}">
+        <button>제출</button>
+    </form>
+</body>
+</html>
+
+<!-- 강사님 이메일 패턴 관련해서 질문이 있는데요! @는 괄호[]로 감싸주었는데 \.은 괄호[]로 감싸주지 않아도 되나요? -->

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label {
+            display: block;
+        }
+
+        /* input에 required 속성이 있다면.사용자로 하여금 중요한 input이구나. 해당 속성을 required가 없는 input과 시각적인 구분을 가능하게 합니다. */
+        input:required { 
+            border: 5px solid orange;
+        }
+
+        /* 올바르지 않은 입력이 이루어진 input을 선택합니다. 3가지 밸리데이션(email, required, minlength)을 통과해야 이 스타일이 해제됨. */
+        input:invalid {
+            border: 5px solid red;
+        }
+
+        /* 올바른 입력이 이루어졌을 때 input을 선택합니다.*/
+        input:valid {
+            /* 첫번째 input는 required가 없음. 필수사항이 아니기 때문에 파란색이 적용됨. 기본적으로 valid한 상태. */
+            border: 5px solid blue;
+        }
+
+        input:required:invalid {
+            /* required한테 invalid도 할 경우 */
+            border: 5px solid teal;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- minlength="" maxlength=""는 데이터의 길이를 제한합니다. -->
+    <!-- required, type(number, email, password, url 등)도 밸리데이션의 역할을 함. -->
+    <!-- <input type="text" required minlength="" maxlength=""> -->
+    <!-- min="" max="" : 숫자의 크기를 제한합니다. -->
+    <!-- <input type="number" min="" max=""> -->
+
+
+
+    <form action="">
+        <label for="stuff">원하는 수량을 입력하세요 (최소 3개 이상)</label>
+        <input type="number" min="3" id="stuff">
+
+        <label for="email">이메일을 입력하세요</label>
+        <input type="email" id="email" required minlength="20">
+
+        <input type="text" required>
+        <button type="submit">제출</button>
+    </form>
+
+
+</body>
+</html>

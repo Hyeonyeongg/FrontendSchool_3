@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <label for="txt">숫자 입력 : </label>
+        <input type="text" id="txt" required pattern="[0-9]">
+        <button>제출</button>
+    </form>
+    <script>
+        const inp = document.querySelector('input');
+        // console.log(inp.validity); //자바스크립트 API로 제공해주는 것이 Constraint validtaion API
+        //patternMismatch 패턴이 일치하는지. 일치하면 false 일치하지 않으면 true
+        //rangeOverflow는 값이 맥스보다 숫자 크면 true. , rangeUnderflow 값이 min보다 작으면 true
+        //tooLong는 maxlength보다 넘어가면 true, tooShort는 minlength보다 작은 경우 true
+        //typeMismatch 데이터 타입이 일치하는가.
+        //valid모든 유효성 조건을 통과할시 true
+        //valueMissing 값이 없다. 없으면 true 있으면 false 
+
+        inp.addEventListener('input', ()=>{
+            console.log(inp.validity);
+        })
+
+
+
+
+
+    </script>
+</body>
+</html>
